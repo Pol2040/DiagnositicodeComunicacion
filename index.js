@@ -14,150 +14,117 @@ function toggleTheme() {
 
 // Definición de las preguntas
 const QUESTIONS = [
-    // Bloque 1: Operación y Flota
+    // COMUNICACIÓN
     {
-        category: 'Operación y Flota',
-        text: 'Antigüedad promedio de la flota:',
-        options: [
-            { text: 'Menos de 5 años', points: 0 },
-            { text: 'Entre 5 y 10 años', points: 2 },
-            { text: 'Más de 10 años', points: 4 }
+        category: 'COMUNICACIÓN', text: 'En mi empresa y/o equipo se comunican objetivos específicos y fechas de cumplimiento.', options: [
+            { text: 'Nunca', points: 1 },
+            { text: 'Rara vez', points: 2 },
+            { text: 'A veces', points: 3 },
+            { text: 'Frecuentemente', points: 4 },
+            { text: 'Siempre', points: 5 }
         ]
     },
     {
-        category: 'Operación y Flota',
-        text: 'Tipo de operación principal:',
-        options: [
-            { text: 'Carga general liviana', points: 1 },
-            { text: 'Carga pesada / larga distancia', points: 3 },
-            { text: 'Mercancías peligrosas', points: 5 }
+        category: 'COMUNICACIÓN', text: 'Las reuniones finalizan con tareas, responsables y próximos pasos definidos.', options: [
+            { text: 'Nunca', points: 1 },
+            { text: 'Rara vez', points: 2 },
+            { text: 'A veces', points: 3 },
+            { text: 'Frecuentemente', points: 4 },
+            { text: 'Siempre', points: 5 }
         ]
     },
     {
-        category: 'Operación y Flota',
-        text: 'Determine sus "Mercancías peligrosas"',
-        multiSelect: true,
-        options: [
-            { text: 'Explosivos', points: 0 },
-            { text: 'Gases', points: 0 },
-            { text: 'Líquidos Inflamables', points: 0 },
-            { text: 'Clase 4', points: 0 },
-            { text: 'Comburentes, peróxidos orgánicos', points: 0 },
-            { text: 'Sustancias tóxicas', points: 0 },
-            { text: 'Radiactivos (Categoria 1, 2 y 3)', points: 0 },
-            { text: 'Corrosivo', points: 0 },
-            { text: 'Sustancias de peligrosidad diversa (Misceláneos)', points: 0 }
+        category: 'COMUNICACIÓN', text: 'Los colaboradores reciben de manera trimestral feedback claro sobre su desempeño y resultados.', options: [
+            { text: 'Nunca', points: 1 },
+            { text: 'Rara vez', points: 2 },
+            { text: 'A veces', points: 3 },
+            { text: 'Frecuentemente', points: 4 },
+            { text: 'Siempre', points: 5 }
+        ]
+    },
+    // LIDERAZGO
+    {
+        category: 'LIDERAZGO', text: 'Los jefes brindan dirección clara a sus equipos.', options: [
+            { text: 'Nunca', points: 1 },
+            { text: 'Rara vez', points: 2 },
+            { text: 'A veces', points: 3 },
+            { text: 'Frecuentemente', points: 4 },
+            { text: 'Siempre', points: 5 }
         ]
     },
     {
-        category: 'Operación y Flota',
-        text: 'Kilómetros promedio mensuales por unidad:',
-        options: [
-            { text: 'Menos de 8.000 km', points: 1 },
-            { text: '8.000 a 15.000 km', points: 3 },
-            { text: 'Más de 15.000 km', points: 5 }
+        category: 'LIDERAZGO', text: 'Los líderes están disponibles para escuchar problemas o ideas.', options: [
+            { text: 'Nunca', points: 1 },
+            { text: 'Rara vez', points: 2 },
+            { text: 'A veces', points: 3 },
+            { text: 'Frecuentemente', points: 4 },
+            { text: 'Siempre', points: 5 }
         ]
     },
     {
-        category: 'Operación y Flota',
-        text: 'Turnos de conducción:',
-        options: [
-            { text: 'Solo diurno', points: 1 },
-            { text: 'Rotativo', points: 3 },
-            { text: 'Mayormente nocturno', points: 5 }
+        category: 'LIDERAZGO', text: 'Los líderes realizan reuniones o conversaciones periódicas para alinear objetivos y seguimiento.', options: [
+            { text: 'Nunca', points: 1 },
+            { text: 'Rara vez', points: 2 },
+            { text: 'A veces', points: 3 },
+            { text: 'Frecuentemente', points: 4 },
+            { text: 'Siempre', points: 5 }
         ]
     },
-    // Bloque 2: Conductores
+    // CLIMA LABORAL
     {
-        category: 'Conductores',
-        text: 'Experiencia promedio de los conductores:',
-        options: [
-            { text: 'Más de 10 años', points: 0 },
-            { text: 'Entre 3 y 10 años', points: 2 },
-            { text: 'Menos de 3 años', points: 4 }
-        ]
-    },
-    {
-        category: 'Conductores',
-        text: 'Rotación anual de choferes:',
-        options: [
-            { text: 'Baja', points: 0 },
-            { text: 'Media', points: 3 },
-            { text: 'Alta', points: 5 }
+        category: 'CLIMA LABORAL', text: 'En nuestros equipos de trabajo las diferencias o desacuerdos pueden expresarse sin temor a represalias.', options: [
+            { text: 'Nunca', points: 1 },
+            { text: 'Rara vez', points: 2 },
+            { text: 'A veces', points: 3 },
+            { text: 'Frecuentemente', points: 4 },
+            { text: 'Siempre', points: 5 }
         ]
     },
     {
-        category: 'Conductores',
-        text: 'Historial de siniestros últimos 12 meses:',
-        options: [
-            { text: 'Ninguno', points: 0 },
-            { text: 'Siniestros leves', points: 3 },
-            { text: 'Siniestros graves', points: 5 }
+        category: 'CLIMA LABORAL', text: 'Los logros o aportes de las personas son reconocidos explícitamente dentro del equipo.', options: [
+            { text: 'Nunca', points: 1 },
+            { text: 'Rara vez', points: 2 },
+            { text: 'A veces', points: 3 },
+            { text: 'Frecuentemente', points: 4 },
+            { text: 'Siempre', points: 5 }
+        ]
+    },
+    // TRABAJO EN EQUIPO
+    {
+        category: 'TRABAJO EN EQUIPO', text: 'Diversas áreas responden en tiempo y forma cuando se requiere colaboración.', options: [
+            { text: 'Nunca', points: 1 },
+            { text: 'Rara vez', points: 2 },
+            { text: 'A veces', points: 3 },
+            { text: 'Frecuentemente', points: 4 },
+            { text: 'Siempre', points: 5 }
         ]
     },
     {
-        category: 'Conductores',
-        text: '¿Se detectan hábitos de riesgo (velocidad, distracción)?',
-        options: [
-            { text: 'No', points: 0 },
-            { text: 'Ocasionalmente', points: 3 },
-            { text: 'Frecuentemente', points: 5 }
+        category: 'TRABAJO EN EQUIPO', text: 'Cuando aparecen conflictos, se generan conversaciones para resolverlos y definir acuerdos.', options: [
+            { text: 'Nunca', points: 1 },
+            { text: 'Rara vez', points: 2 },
+            { text: 'A veces', points: 3 },
+            { text: 'Frecuentemente', points: 4 },
+            { text: 'Siempre', points: 5 }
         ]
     },
-    // Bloque 3: Gestión del Riesgo
+    // GESTIÓN DE CAMBIO
     {
-        category: 'Gestión del Riesgo',
-        text: '¿Se realizan capacitaciones periódicas?',
-        options: [
-            { text: 'Sí, anualmente o más frecuente', points: 0 },
-            { text: 'Esporádicamente', points: 3 },
-            { text: 'No', points: 5 }
-        ]
-    },
-    {
-        category: 'Gestión del Riesgo',
-        text: '¿Existe seguimiento posterior a la capacitación?',
-        options: [
-            { text: 'Sí, sistemático', points: 0 },
-            { text: 'Parcial', points: 3 },
-            { text: 'No', points: 5 }
+        category: 'GESTIÓN DE CAMBIO', text: 'Antes de implementar cambios, se comunica qué cambia, por qué y cómo impacta en el trabajo.', options: [
+            { text: 'Nunca', points: 1 },
+            { text: 'Rara vez', points: 2 },
+            { text: 'A veces', points: 3 },
+            { text: 'Frecuentemente', points: 4 },
+            { text: 'Siempre', points: 5 }
         ]
     },
     {
-        category: 'Gestión del Riesgo',
-        text: '¿Existen protocolos escritos de conducción segura?',
-        options: [
-            { text: 'Sí y se controlan', points: 0 },
-            { text: 'Sí pero no se controlan', points: 3 },
-            { text: 'No existen', points: 5 }
-        ]
-    },
-    // Bloque 4: Impacto Económico y Legal
-    {
-        category: 'Impacto Económico y Legal',
-        text: 'Evolución de primas de seguro en 2 años:',
-        options: [
-            { text: 'Se mantuvieron', points: 1 },
-            { text: 'Aumentaron levemente', points: 3 },
-            { text: 'Aumentaron significativamente', points: 5 }
-        ]
-    },
-    {
-        category: 'Impacto Económico y Legal',
-        text: '¿Se registran y analizan costos indirectos de siniestros?',
-        options: [
-            { text: 'Sí', points: 0 },
-            { text: 'Parcialmente', points: 3 },
-            { text: 'No', points: 5 }
-        ]
-    },
-    {
-        category: 'Impacto Económico y Legal',
-        text: 'Nivel de conocimiento del marco legal vigente:',
-        options: [
-            { text: 'Alto', points: 0 },
-            { text: 'Medio', points: 3 },
-            { text: 'Bajo', points: 5 }
+        category: 'GESTIÓN DE CAMBIO', text: 'Después de un cambio organizacional, los equipos logran reorganizar tareas y funcionamiento en tiempos definidos.', options: [
+            { text: 'Nunca', points: 1 },
+            { text: 'Rara vez', points: 2 },
+            { text: 'A veces', points: 3 },
+            { text: 'Frecuentemente', points: 4 },
+            { text: 'Siempre', points: 5 }
         ]
     }
 ];
