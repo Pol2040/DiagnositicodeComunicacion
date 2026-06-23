@@ -1,0 +1,1 @@
+# Diagn-siticodeComunicaci-n
