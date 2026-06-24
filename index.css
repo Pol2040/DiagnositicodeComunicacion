@@ -1,12 +1,12 @@
 :root {
-    --primary: #6366f1;
-    --primary-hover: #4f46e5;
-    --secondary: #0ea5e9;
+    --primary: #012841;
+    --primary-hover: #011b2b;
+    --secondary: #e8650a;
     --bg-body: #f0f2f5;
     --bg-card: #ffffff;
     --text-main: #1a1f36;
     --text-muted: #697386;
-    --accent: #10b981;
+    --accent: #e21d48;
     --error: #ef4444;
     --glass: rgba(255, 255, 255, 0.8);
     --border: rgba(0, 0, 0, 0.08);
