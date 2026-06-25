@@ -37,6 +37,7 @@
     --checkbox-hover-bg: rgba(226, 29, 72, 0.05);
     --checkbox-accent: #e21d48;
 }
+[data-theme='dark'] .dark-pink { color: var(--accent); }
 
 * {
     margin: 0;
