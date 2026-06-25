@@ -17,16 +17,25 @@
     --fw-semibold: 600;
     --fw-bold: 700;
     --fw-extrabold: 800;
+    --option-hover-bg: rgba(232, 101, 10, 0.08);
+    --option-hover-border: #e8650a;
+    --checkbox-hover-bg: rgba(232, 101, 10, 0.05);
+    --checkbox-accent: #e8650a;
     color-scheme: light dark;
 }
 
 [data-theme='dark'] {
-    --bg-body: #0f172a;
+    --bg-body: #012841;
     --bg-card: #1e293b;
     --text-main: #f8fafc;
     --text-muted: #94a3b8;
     --glass: rgba(30, 41, 59, 0.7);
     --border: rgba(255, 255, 255, 0.1);
+    --secondary: #e21d48;
+    --option-hover-bg: rgba(226, 29, 72, 0.08);
+    --option-hover-border: #e21d48;
+    --checkbox-hover-bg: rgba(226, 29, 72, 0.05);
+    --checkbox-accent: #e21d48;
 }
 
 * {
@@ -166,6 +175,14 @@ main {
     letter-spacing: -0.02em;
 }
 
+.title-primary {
+    color: #012841;
+}
+
+[data-theme='dark'] .title-primary {
+    color: #ffffff;
+}
+
 .hero p {
     font-size: 1.25rem;
     color: var(--text-muted);
@@ -263,7 +280,7 @@ main {
 
 .category-label {
     font-size: 0.85rem;
-    color: #e8650a; /* Orange subtitle */
+    color: var(--secondary); /* Orange subtitle in light, Pink in dark */
     text-transform: uppercase;
     letter-spacing: 1.5px;
     display: block;
@@ -326,8 +343,8 @@ main {
 }
 
 .quiz-option:hover {
-    background: rgba(232, 101, 10, 0.08); /* Soft orange background */
-    border-color: #e8650a; /* Orange highlight */
+    background: var(--option-hover-bg);
+    border-color: var(--option-hover-border);
     transform: translateX(8px);
 }
 
@@ -428,6 +445,10 @@ main {
         background: white !important;
         color: black !important;
         font-family: 'Open Sans', Arial, sans-serif !important;
+    }
+
+    .title-primary {
+        color: #012841 !important;
     }
 
     .bg-mesh,
@@ -554,15 +575,15 @@ main {
 }
 
 .quiz-checkbox-item:hover {
-    background: rgba(232, 101, 10, 0.05); /* Soft orange background */
-    border-color: #e8650a; /* Orange highlight */
+    background: var(--checkbox-hover-bg);
+    border-color: var(--option-hover-border);
 }
 
 .quiz-checkbox-item input[type="checkbox"] {
     width: 20px;
     height: 20px;
     cursor: pointer;
-    accent-color: #e8650a;
+    accent-color: var(--checkbox-accent);
 }
 
 .quiz-checkbox-label {
