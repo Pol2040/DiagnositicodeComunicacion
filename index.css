@@ -39,6 +39,14 @@
 }
 [data-theme='dark'] .dark-pink { color: var(--accent); }
 
+[data-theme='dark'] header {
+    background: #082232;
+}
+
+[data-theme='dark'] #quiz-section .card {
+    background: #082232;
+}
+
 * {
     margin: 0;
     padding: 0;
