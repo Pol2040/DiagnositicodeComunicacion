@@ -38,6 +38,11 @@
     --checkbox-accent: #e21d48;
 }
 [data-theme='dark'] .dark-pink { color: var(--accent); }
+[data-theme='dark'] .step-badge.dark-pink {
+    background: rgba(226, 29, 72, 0.1);
+    border-color: rgba(226, 29, 72, 0.2);
+}
+
 
 [data-theme='dark'] header {
     background: #082232;
