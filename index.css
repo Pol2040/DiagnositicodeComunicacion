@@ -44,6 +44,12 @@
     background: rgba(232, 101, 10, 0.08);
     border-color: rgba(232, 101, 10, 0.2);
 }
+#question-count {
+    color: #e8650a;
+}
+[data-theme='dark'] #question-count {
+    color: #e21d48;
+}
 
 [data-theme='dark'] .dark-pink {
     color: #e21d48;
