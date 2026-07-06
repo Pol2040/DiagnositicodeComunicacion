@@ -627,6 +627,9 @@ main {
     font-weight: var(--fw-bold);
     letter-spacing: -0.02em;
 }
+[data-theme='dark'] .faq-item h3 {
+    color: #e21d48;
+}
 
 .faq-item p {
     color: var(--text-main);
