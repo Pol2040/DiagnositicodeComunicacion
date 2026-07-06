@@ -37,6 +37,44 @@
     --checkbox-hover-bg: rgba(226, 29, 72, 0.05);
     --checkbox-accent: #e21d48;
 }
+
+/* Resaltados en Modo Oscuro (Rosa #e21d48) */
+[data-theme='dark'] .btn-primary:hover {
+    box-shadow: 0 10px 15px -3px rgba(226, 29, 72, 0.4);
+}
+
+[data-theme='dark'] .btn-secondary:hover {
+    box-shadow: 0 10px 15px -3px rgba(226, 29, 72, 0.4);
+}
+
+[data-theme='dark'] .btn-outline:hover {
+    border-color: #e21d48;
+    color: #e21d48;
+    background: rgba(226, 29, 72, 0.05);
+    box-shadow: 0 0 10px rgba(226, 29, 72, 0.3);
+}
+
+[data-theme='dark'] .faq-item:hover {
+    border-color: #e21d48;
+    box-shadow: 0 10px 20px -5px rgba(226, 29, 72, 0.25);
+}
+
+[data-theme='dark'] .form-group input:focus,
+[data-theme='dark'] .form-group select:focus {
+    border-color: #e21d48;
+    box-shadow: 0 0 0 4px rgba(226, 29, 72, 0.25);
+}
+
+[data-theme='dark'] .quiz-group-title {
+    color: #e21d48;
+    border-left-color: #e21d48;
+}
+
+[data-theme='dark'] .step-badge {
+    background: rgba(226, 29, 72, 0.1);
+    color: #e21d48;
+    border-color: rgba(226, 29, 72, 0.2);
+}
 .dark-pink {
     color: #e8650a;
 }
