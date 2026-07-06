@@ -60,12 +60,20 @@
 }
 
 
+#elac-logo-dark {
+    display: none;
+}
+
 [data-theme='dark'] header {
     background: #082232;
 }
 
 [data-theme='dark'] #elac-logo {
     display: none;
+}
+
+[data-theme='dark'] #elac-logo-dark {
+    display: block;
 }
 
 [data-theme='dark'] #quiz-section .card {
