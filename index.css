@@ -204,7 +204,7 @@ header {
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 10px 15px -3px rgba(232, 101, 10, 0.4);
     background: var(--primary-hover);
 }
 
@@ -215,7 +215,7 @@ header {
 
 .btn-secondary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.4);
+    box-shadow: 0 10px 15px -3px rgba(232, 101, 10, 0.4);
     opacity: 0.9;
 }
 
@@ -226,8 +226,11 @@ header {
 }
 
 .btn-outline:hover {
-    background: var(--border);
+    border-color: #e8650a;
+    color: #e8650a;
+    background: rgba(232, 101, 10, 0.05);
     transform: translateY(-2px);
+    box-shadow: 0 0 10px rgba(232, 101, 10, 0.3);
 }
 
 .auth-buttons {
@@ -341,21 +344,21 @@ main {
 .form-group input:focus,
 .form-group select:focus {
     outline: none;
-    border-color: var(--primary);
+    border-color: #e8650a;
     background: var(--bg-card);
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    box-shadow: 0 0 0 4px rgba(232, 101, 10, 0.15);
 }
 
 .step-badge {
-    background: rgba(99, 102, 241, 0.1);
-    color: var(--primary);
+    background: rgba(232, 101, 10, 0.08);
+    color: #e8650a;
     padding: 0.4rem 1rem;
     border-radius: 20px;
     font-size: 0.85rem;
     font-weight: var(--fw-bold);
     text-transform: uppercase;
     letter-spacing: 1px;
-    border: 1px solid rgba(99, 102, 241, 0.2);
+    border: 1px solid rgba(232, 101, 10, 0.2);
 }
 
 .category-label {
@@ -442,9 +445,12 @@ main {
 
 #risk-description strong {
     color: var(--text-main);
-    background: rgba(99, 102, 241, 0.1);
+    background: rgba(232, 101, 10, 0.1);
     padding: 0 4px;
     border-radius: 4px;
+}
+[data-theme='dark'] #risk-description strong {
+    background: rgba(226, 29, 72, 0.15);
 }
 
 .result-note {
@@ -604,8 +610,8 @@ main {
 
 .faq-item:hover {
     transform: translateY(-5px);
-    border-color: var(--primary);
-    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05);
+    border-color: #e8650a;
+    box-shadow: 0 10px 20px -5px rgba(232, 101, 10, 0.15);
 }
 
 .faq-item h3 {
@@ -675,10 +681,10 @@ main {
 
 .quiz-group-title {
     font-size: 1.1rem;
-    color: var(--primary);
+    color: #e8650a;
     font-weight: var(--fw-bold);
     margin-top: 1.5rem;
     margin-bottom: 0.5rem;
     padding-left: 0.5rem;
-    border-left: 4px solid var(--primary);
+    border-left: 4px solid #e8650a;
 }
