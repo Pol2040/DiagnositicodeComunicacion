@@ -198,14 +198,14 @@ header {
 }
 
 .btn-primary {
-    background: var(--primary);
+    background: var(--secondary);
     color: white;
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 15px -3px rgba(232, 101, 10, 0.4);
-    background: var(--primary-hover);
+    background: var(--secondary);
 }
 
 .btn-secondary {
@@ -223,6 +223,12 @@ header {
     background: transparent;
     border: 1px solid var(--border);
     color: var(--text-main);
+}
+
+[data-theme='dark'] .btn-outline {
+    background: var(--secondary);
+    color: white;
+    border: none;
 }
 
 .btn-outline:hover {
