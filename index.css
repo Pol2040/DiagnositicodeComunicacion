@@ -64,6 +64,10 @@
     background: #082232;
 }
 
+[data-theme='dark'] #elac-logo {
+    display: none;
+}
+
 [data-theme='dark'] #quiz-section .card {
     background: #082232;
 }
