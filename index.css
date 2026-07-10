@@ -38,6 +38,8 @@
     --checkbox-accent: #e21d48;
 }
 
+[data-theme='dark'] .logo { color: #ffffff; }
+
 /* Resaltados en Modo Oscuro (Rosa #e21d48) */
 [data-theme='dark'] .btn-primary:hover {
     box-shadow: 0 10px 15px -3px rgba(226, 29, 72, 0.4);
@@ -165,9 +167,6 @@ header {
     font-weight: var(--fw-extrabold);
     color: var(--accent);
     /* Removed gradient background */
-}
-[data-theme='dark'] .logo {
-    color: #ffffff;
 }
 
 
