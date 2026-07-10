@@ -483,9 +483,8 @@ main {
     opacity: 0.8;
     text-align: center;
 }
-[data-theme='dark'] .logout-link,
-[data-theme='dark'] .logout-link:hover {
-    color: #e21d48;
+[data-theme='dark'] .logout-link {
+    color: #FFFFFF;
 }
 
 [data-theme='dark'] .logout-link {
