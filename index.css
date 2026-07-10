@@ -483,6 +483,14 @@ main {
     opacity: 0.8;
     text-align: center;
 }
+[data-theme='dark'] .logout-link,
+[data-theme='dark'] .logout-link:hover {
+    color: #e21d48;
+}
+
+[data-theme='dark'] .logout-link {
+    color: #e21d48;
+}
 
 /* Theme Toggle Button */
 .theme-toggle {
@@ -523,6 +531,9 @@ main {
 
 .sun-icon {
     display: none;
+}
+[data-theme='dark'] .logout-link:hover {
+    color: #e21d48;
 }
 
 .moon-icon {
