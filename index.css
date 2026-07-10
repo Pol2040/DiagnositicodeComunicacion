@@ -166,6 +166,9 @@ header {
     color: var(--accent);
     /* Removed gradient background */
 }
+[data-theme='dark'] .logo {
+    color: #ffffff;
+}
 
 
 .nav-links {
