@@ -483,13 +483,6 @@ main {
     opacity: 0.8;
     text-align: center;
 }
-[data-theme='dark'] .logout-link {
-    color: #FFFFFF;
-}
-
-[data-theme='dark'] .logout-link {
-    color: #e21d48;
-}
 
 /* Theme Toggle Button */
 .theme-toggle {
@@ -531,9 +524,6 @@ main {
 .sun-icon {
     display: none;
 }
-[data-theme='dark'] .logout-link:hover {
-    color: #e21d48;
-}
 
 .moon-icon {
     display: block;
@@ -543,6 +533,10 @@ main {
     color: var(--primary);
     opacity: 1;
 }
+
+/* Dark mode register link */
+[data-theme='dark'] .logout-link { color: #ffffff; }
+[data-theme='dark'] .logout-link:hover { color: #e21d48; }
 
 @media print {
     body {
