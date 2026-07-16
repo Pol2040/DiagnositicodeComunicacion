@@ -634,8 +634,8 @@ function sendEmail() {
     console.log('Parámetros enviados:', templateParams);
 
     // CONFIGURACIÓN: Todos los casos usan la cuenta principal por ahora
-    SERVICE_ID = 'service_x0bzq7l';
-    TEMPLATE_ID = 'template_dzf9trj';
+    SERVICE_ID = 'service_iroclp9';
+    TEMPLATE_ID = 'template_dkpkqkf';
     PUBLIC_KEY = 'LVsT7wnz6G3_xp-AL';
 
     emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
@@ -686,8 +686,8 @@ function sendAutoEmail(riskType, emailSubject, emailBody) {
     console.log('📤 Iniciando envío automático de email a:', state.leads.email);
 
     // CONFIGURACIÓN: Todos los casos usan la cuenta principal por ahora
-    let SERVICE_ID = 'service_x0bzq7l';
-    let TEMPLATE_ID = 'template_dzf9trj';
+    let SERVICE_ID = 'service_iroclp9';
+    let TEMPLATE_ID = 'template_dkpkqkf';
     let PUBLIC_KEY = 'LVsT7wnz6G3_xp-AL';
 
     emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
