@@ -145,7 +145,7 @@ const state = {
     currentEmailSubject: '',
     currentEmailBody: '',
     // URL de Google Apps Script (Reemplazar con la URL generada al implementar el script)
-    googleSheetUrl: 'https://script.google.com/macros/s/AKfycbwOp9v-OlWGMuc2ni0gN1PdOA4KzOLpo5e2k9EkiqMGhjntWEDjE0d95w7XqDXqud0K/exec'
+    googleSheetUrl: 'https://script.google.com/macros/s/AKfycbxoPO0JAoJGI0TutjsNx_2bRZAbTWppvpct1iyDyTsTAMCPZrrNjJ9MZGiKHVYBe7EVJw/exec'
 };
 
 /**
