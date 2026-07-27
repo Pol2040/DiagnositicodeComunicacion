@@ -329,16 +329,9 @@ function startQuiz() {
  */
 function renderQuestion() {
     const question = QUESTIONS[state.currentQuestionIndex];
-    const totalQuestions = QUESTIONS.length - 1;
+    const totalQuestions = QUESTIONS.length;
 
-    let displayIndex;
-    if (state.currentQuestionIndex <= 1) {
-        displayIndex = state.currentQuestionIndex + 1;
-    } else if (state.currentQuestionIndex === 2) {
-        displayIndex = 2; // Parte de la 2
-    } else {
-        displayIndex = state.currentQuestionIndex;
-    }
+    const displayIndex = state.currentQuestionIndex + 1;
 
     // Actualizar progreso
     document.getElementById('question-count').innerText = `Pregunta ${displayIndex} de ${totalQuestions}`;
@@ -428,19 +421,6 @@ function renderQuestion() {
 function handleAnswer(points, optionNumber) {
     state.totalPoints += points;
     state.answers.push({ points, optionNumber });
-
-    // Lógica de salto condicional para Pregunta 2 (index 1)
-    if (state.currentQuestionIndex === 1) {
-        if (optionNumber === 3) {
-            // Si es "Mercancías peligrosas", va a la nueva pregunta 3 (index 2)
-            state.currentQuestionIndex = 2;
-        } else {
-            // Si es opción 1 o 2, salta a la pregunta 4 (que ahora es index 3)
-            state.currentQuestionIndex = 3;
-        }
-        renderQuestion();
-        return;
-    }
 
     // El formulario de auth aparece después de un par de bloques
     // Ajustado para que aparezca después de la pregunta de Kilómetros (index 3)
