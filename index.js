@@ -437,97 +437,223 @@ function handleAnswer(points, optionNumber) {
     }
 }
 
-/**
- * Muestra el resultado final
- */
 function showResults() {
-    const score = state.totalPoints;
-    const percentile = ((score - 4) / (68 - 4)) * 100;
+    // 1. Calcular puntajes y porcentajes por categoría
+    const categoryScores = {
+        'COMUNICACIÓN': { score: 0, max: 0 },
+        'LIDERAZGO': { score: 0, max: 0 },
+        'CLIMA LABORAL': { score: 0, max: 0 },
+        'TRABAJO EN EQUIPO': { score: 0, max: 0 },
+        'GESTIÓN DE CAMBIO': { score: 0, max: 0 }
+    };
 
-    const isDangerousGoods = state.answers[1]?.optionNumber === 3;
-    // const dgTextGmail = isDangerousGoods ? 'El transporte de mercancías peligrosas implica riesgos específicos que pueden afectar la salud de las personas, el medio ambiente y los bienes materiales, así como también generar consecuencias directas sobre su propia operación. En este contexto, hemos desarrollado un programa de gestión de riesgos especialmente diseñado para este tipo de actividad, orientado a reducir de manera significativa la probabilidad de incidentes y sus posibles impactos.\n\n' : '';
-    const dgTextHTML = isDangerousGoods ? 'El transporte de mercancías peligrosas implica riesgos específicos que pueden afectar la salud de las personas, el medio ambiente y los bienes materiales, así como también generar consecuencias directas sobre su propia operación. En este contexto, hemos desarrollado un programa de gestión de riesgos especialmente diseñado para este tipo de actividad, orientado a reducir de manera significativa la probabilidad de incidentes y sus posibles impactos.<br><br>' : '';
-    let benchmarkText = '';
+    QUESTIONS.forEach((q, index) => {
+        const answer = state.answers[index];
+        const points = answer ? answer.points : 0;
+        if (categoryScores[q.category]) {
+            categoryScores[q.category].score += points;
+            const maxPoints = q.options ? Math.max(...q.options.map(opt => opt.points)) : 5;
+            categoryScores[q.category].max += maxPoints;
+        }
+    });
 
-    if (percentile <= 20) benchmarkText = 'Operación con controles sólidos';
-    else if (percentile <= 40) benchmarkText = 'Riesgo moderado';
-    else if (percentile <= 60) benchmarkText = 'Nivel promedio del sector';
-    else if (percentile <= 80) benchmarkText = 'Riesgo elevado';
-    else if (percentile <= 95) benchmarkText = 'Riesgo crítico';
-    else benchmarkText = 'Exposición extrema';
-
-    let riskType = '';
-    let screenText = '';
-    let emailBody = '';
-    let emailSubject = '';
-    let accentColor = '';
-
-    let gmailButtonBody = '';
-
-    if (score <= 20) {
-        riskType = 'RIESGO BAJO';
-        accentColor = '#10b981'; // Verde
-        screenText = 'La operación presenta buenas prácticas instaladas. Existen oportunidades de mejora preventiva para sostener los resultados en el tiempo.';
-        emailSubject = 'Resultado de su Evaluación de Riesgo Operativo';
-
-        // Contenido solo para Email Automático
-        emailBody = `<div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; line-height: 1.6;">Hola${state.leads.name ? ', ' + state.leads.name : ''},<br><br>Gracias por completar la <strong>Radiografía Ejecutiva de Riesgo Operativo</strong>.<br><br>Según sus respuestas, su operación presenta un <strong style="color: #10b981;">NIVEL DE RIESGO BAJO</strong>.<br><br>Esto indica que existen buenas prácticas instaladas y un control operativo adecuado. Sin embargo, incluso en escenarios favorables, la experiencia demuestra que la prevención continua es clave para sostener estos resultados en el tiempo.<br><br>Quedo a disposición.<br><br><strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br><strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a></div>`;
-
-        // Contenido según imagen (Mantenido para el informe PDF)
-        gmailButtonBody = `<div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; line-height: 1.6;">Estimado${state.leads.name ? ' ' + state.leads.name : ''},<br>Gracias por completar el diagnóstico de riesgo operativo.<br><br><strong style="font-size: 20px;">Nivel de Riesgo Detectado</strong><br>Resultado: <strong style="color: #10b981; font-size: 20px;">RIESGO BAJO</strong><br>Este nivel indica la presencia de buenas prácticas operativas y un adecuado control de la operación, reduciendo significativamente la probabilidad de siniestros.<br><br><strong>Score:</strong> ${score} puntos<br><strong>Nivel de riesgo:</strong> ${benchmarkText}<br><strong>Benchmark:</strong> Su empresa presenta un nivel de riesgo inferior al 90% de las flotas analizadas.<br><br>Esto indica que su operación se encuentra dentro de los niveles más bajos de riesgo del sector, con una base sólida de gestión operativa.<br><br>${dgTextHTML}<strong style="font-size: 18px;">Factores Críticos Detectados</strong><br>- Buenas prácticas operativas instaladas<br>- Conductores con experiencia<br>- Baja siniestralidad<br>- Control operativo adecuado<br><br><strong style="font-size: 18px;">Impacto Operativo</strong><br>- Riesgos residuales no detectados<br>- Dependencia de prácticas informales<br>- Vulnerabilidad ante cambios operativos<br><br><strong style="font-size: 18px;">Recomendaciones Iniciales</strong><br>- Formalizar sistema de gestión<br>- Estandarizar buenas prácticas<br>- Mantener capacitación continua<br>- Auditar periódicamente la operación<br><br><strong style="font-size: 18px;">Conclusión</strong><br>El nivel de riesgo detectado refleja una operación con buen nivel de control. El desafío principal es sostener y sistematizar estas prácticas en el tiempo.<br><br><strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br><strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a><br><br><em>Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se recomienda una reunión de análisis personalizada.</em><br><br><small style="color: #666;">Documento confidencial - Uso exclusivo de la empresa</small></div>`;
-
-    } else if (score <= 40) {
-        riskType = 'RIESGO MEDIO';
-        accentColor = '#f59e0b'; // Amarillo/Ambar
-        screenText = 'Este nivel indica la presencia de prácticas y desvíos operativos que podrían derivar en siniestros evitables y sobrecostos si no se gestionan de forma preventiva.';
-        emailSubject = 'Resultado de su Evaluación de Riesgo Operativo';
-
-        // Contenido solo para Email Automático
-        emailBody = `<div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; line-height: 1.6;">Hola${state.leads.name ? ', ' + state.leads.name : ''},<br><br>Gracias por completar la <strong>Radiografía Ejecutiva de Riesgo Operativo</strong>.<br><br>Según sus respuestas, su operación presenta un <strong style="color: #f59e0b;">NIVEL DE RIESGO MEDIO</strong>.<br><br>Este nivel indica la presencia de prácticas y desvíos operativos que podrían derivar en siniestros evitables y sobrecostos si no se gestionan de forma preventiva.<br><br>Quedo a disposición.<br><br><strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br><strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a></div>`;
-
-        // Contenido según información proporcionada (Mantenido para el informe PDF)
-        gmailButtonBody = `<div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; line-height: 1.6;">Estimado${state.leads.name ? ' ' + state.leads.name : ''},<br>Gracias por completar el diagnóstico de riesgo operativo.<br><br><strong style="font-size: 20px;">Nivel de Riesgo Detectado</strong><br>Resultado: <strong style="color: #f59e0b; font-size: 20px;">RIESGO MEDIO</strong><br>Este nivel indica la presencia de prácticas y desvíos operativos que podrían derivar en siniestros evitables y sobrecostos si no se gestionan de forma preventiva.<br><br><strong>Score:</strong> ${score} puntos<br><strong>Nivel de riesgo:</strong> ${benchmarkText}<br><strong>Benchmark:</strong> Su empresa presenta un nivel de riesgo superior al 65% de las flotas analizadas.<br>Esto indica que su operación presenta un nivel de riesgo similar al de la mayoría de las flotas analizadas, pero con oportunidades claras de mejora para reducir exposición y costos.<br><br>${dgTextHTML}<strong style="font-size: 18px;">Factores Críticos Detectados</strong><br>- Inconsistencias en la gestión operativa<br>- Falta de seguimiento sistemático<br>- Capacitación no sostenida<br>- Hábitos de riesgo moderados<br><br><strong style="font-size: 18px;">Impacto Operativo</strong><br>- Incremento de siniestros evitables<br>- Aumento progresivo de costos<br>- Desviaciones normalizadas<br>- Exposición legal<br><br><strong style="font-size: 18px;">Recomendaciones Iniciales</strong><br>- Estandarizar procesos<br>- Implementar seguimiento<br>- Reforzar capacitación<br>- Corregir hábitos<br>- Incorporar indicadores<br><br><strong style="font-size: 18px;">Conclusión</strong><br>El nivel de riesgo detectado representa una oportunidad concreta de mejora. La implementación de un sistema de gestión preventiva permitirá reducir siniestralidad y optimizar costos.<br><br><strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br><strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a><br><br><em>Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se recomienda una reunión de análisis personalizada.</em><br><br><small style="color: #666;">Documento confidencial – Uso exclusivo de la empresa</small></div>`;
-
-    } else {
-        riskType = 'RIESGO ALTO';
-        accentColor = '#ef4444'; // Rojo
-        screenText = 'Este nivel indica una exposición significativa en términos operativos, económicos y legales, con alta probabilidad de ocurrencia de siniestros.';
-        emailSubject = 'Recomendación tras su Evaluación de Riesgo Operativo';
-
-        // Contenido solo para Email Automático
-        emailBody = `<div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; line-height: 1.6;">Hola${state.leads.name ? ', ' + state.leads.name : ''},<br><br>Gracias por completar la <strong>Radiografía Ejecutiva de Riesgo Operativo</strong>.<br><br>Según sus respuestas, su operación presenta un <strong style="color: #ef4444;">NIVEL DE RIESGO ALTO</strong>.<br><br>Este nivel indica una exposición significativa en términos operativos, económicos y legales, con alta probabilidad de ocurrencia de siniestros.<br><br>Quedo a disposición para una reunión de análisis prioritaria.<br><br><strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br><strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a></div>`;
-
-        // Contenido según información proporcionada (Mantenido para el informe PDF)
-        gmailButtonBody = `<div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; line-height: 1.6;">Estimado${state.leads.name ? ' ' + state.leads.name : ''},<br>Gracias por completar el diagnóstico de riesgo operativo.<br><br><strong style="font-size: 20px;">Nivel de Riesgo Detectado</strong><br>Resultado: <strong style="color: #ef4444; font-size: 20px;">RIESGO ALTO</strong><br>Este nivel indica una exposición significativa en términos operativos, económicos y legales, con alta probabilidad de ocurrencia de siniestros.<br><br><strong>Score:</strong> ${score} puntos<br><strong>Nivel de riesgo:</strong> ${benchmarkText}<br><strong>Benchmark:</strong> Su empresa presenta un nivel de riesgo superior al 80% de las flotas analizadas.<br>Esto indica una posición crítica dentro del sector, con una exposición significativamente mayor al promedio.<br><br>${dgTextHTML}<strong style="font-size: 18px;">Factores Críticos Detectados</strong><br>- Exposición operativa crítica<br>- Conductores con baja experiencia o alta rotación<br>- Hábitos de riesgo frecuentes<br>- Ausencia de gestión preventiva<br><br><strong style="font-size: 18px;">Impacto Operativo</strong><br>- Alta probabilidad de siniestros<br>- Incremento de costos operativos<br>- Exposición legal significativa<br>- Pérdida de control operativo<br><br><strong style="font-size: 18px;">Recomendaciones Iniciales</strong><br>- Intervención inmediata en conductores<br>- Implementar sistema de gestión<br>- Definir protocolos obligatorios<br>- Medir costos y riesgos<br><br><strong style="font-size: 18px;">Conclusión</strong><br>El nivel de riesgo detectado requiere una intervención prioritaria. La implementación de un sistema estructurado de gestión es clave para recuperar el control operativo y reducir la exposición.<br><br><strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br><strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a><br><br><em>Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se recomienda una reunión de análisis personalizada.</em><br><br><small style="color: #666;">Documento confidencial – Uso exclusivo de la empresa</small></div>`;
+    const categoryResults = {};
+    for (const cat in categoryScores) {
+        const { score, max } = categoryScores[cat];
+        const percentage = max > 0 ? Math.round((score / max) * 100) : 0;
+        categoryResults[cat] = { score, max, percentage };
     }
 
-    // Guardar los cuerpos por separado
-    state.currentEmailSubject = emailSubject;
-    state.currentEmailBody = emailBody; // Original
-    // state.gmailButtonBody = gmailButtonBody; // Comentado (Gmail Manual)
+    // 2. Cálculo del ISO (Índice de Salud Organizacional)
+    const isoScore = state.totalPoints;
+    const isoMax = Object.values(categoryScores).reduce((sum, item) => sum + item.max, 0) || 60;
+    const isoPercentage = Math.round((isoScore / isoMax) * 100);
+
+    // 3. Definición de Devoluciones (Feedbacks) por dimensión
+    const CATEGORY_FEEDBACK = {
+        'COMUNICACIÓN': {
+            high: 'La comunicación en el equipo es fluida, estructurada y orientada a resultados. Los objetivos claros y las reuniones efectivas facilitan la alineación de todos.',
+            medium: 'Se observan canales de comunicación activos, pero persisten inconsistencias en la formalización de objetivos o en el seguimiento estructurado de tareas.',
+            low: 'La comunicación es mayormente informal o reactiva. La falta de feedback claro y objetivos explícitos genera incertidumbre y desalineación en el equipo.'
+        },
+        'LIDERAZGO': {
+            high: 'Los líderes demuestran un rol activo de guía y soporte. Están disponibles para sus equipos y facilitan espacios periódicos para la alineación de metas.',
+            medium: 'El liderazgo responde a las necesidades diarias, pero requiere sistematizar los espacios de feedback y mejorar la claridad en la dirección brindada.',
+            low: 'Se percibe un liderazgo distante o centrado únicamente en la urgencia. La falta de dirección clara y disponibilidad debilita la confianza de los colaboradores.'
+        },
+        'CLIMA LABORAL': {
+            high: 'El ambiente de trabajo es seguro y de mutuo respeto. Existe libertad para expresar desacuerdos y los logros son reconocidos de forma explícita.',
+            medium: 'El clima de trabajo es estable, aunque existen tensiones ocasionales o falta de reconocimiento formal que limitan el compromiso del equipo.',
+            low: 'Se detectan niveles de tensión o temor a represalias al expresar disconformidades. La falta de valoración y apoyo mutuo afecta negativamente el clima.'
+        },
+        'TRABAJO EN EQUIPO': {
+            high: 'Existe una sólida colaboración interdepartamental y una cultura enfocada en la resolución constructiva de conflictos mediante el diálogo y los acuerdos.',
+            medium: 'Los equipos colaboran cuando se solicita, pero la resolución de conflictos suele demorarse o depender de voluntades individuales más que de procesos claros.',
+            low: 'Se perciben silos entre áreas y dificultades para colaborar bajo presión. Los conflictos no resueltos generan fricción constante en la operación.'
+        },
+        'GESTIÓN DE CAMBIO': {
+            high: 'La organización es ágil y gestiona el cambio de forma estructurada, comunicando el impacto a los colaboradores y logrando una rápida adaptación.',
+            medium: 'Se implementan cambios, pero suele faltar comunicación previa detallada o los equipos demoran más de lo previsto en reorganizarse.',
+            low: 'Los cambios se perciben como imposiciones con poca claridad. La resistencia y la lentitud para reorganizar tareas ponen en riesgo la continuidad operativa.'
+        }
+    };
+
+    function getCategoryFeedback(category, percentage) {
+        const feedback = CATEGORY_FEEDBACK[category];
+        if (!feedback) return '';
+        if (percentage >= 80) return feedback.high;
+        if (percentage >= 50) return feedback.medium;
+        return feedback.low;
+    }
+
+    function getCategoryColor(percentage) {
+        if (percentage >= 80) return '#10b981'; // Verde
+        if (percentage >= 50) return '#f59e0b'; // Amarillo
+        return '#ef4444'; // Rojo
+    }
+
+    // 4. Clasificación del Nivel General ISO
+    let riskType = '';
+    let screenText = '';
+    let emailSubject = 'Resultado de su Diagnóstico de Salud Organizacional (ISO)';
+    let accentColor = '';
+    let benchmarkText = '';
+
+    if (isoPercentage >= 80) {
+        riskType = 'SALUD ORGANIZACIONAL ALTA';
+        accentColor = '#10b981';
+        screenText = 'La organización posee prácticas maduras de comunicación, liderazgo y clima. El desafío es sostener estas fortalezas y sistematizarlas como cultura de la empresa.';
+        benchmarkText = 'Su empresa presenta un nivel de salud organizacional óptimo, superior al 85% de las organizaciones evaluadas.';
+    } else if (isoPercentage >= 50) {
+        riskType = 'SALUD ORGANIZACIONAL MEDIA';
+        accentColor = '#f59e0b';
+        screenText = 'Existen bases operativas construidas, pero se observan inconsistencias que frenan el desempeño. Se requiere estandarizar procesos de alineación y feedback para consolidar los equipos.';
+        benchmarkText = 'Su empresa presenta un nivel de salud organizacional en desarrollo, similar al promedio del sector.';
+    } else {
+        riskType = 'SALUD ORGANIZACIONAL BAJA';
+        accentColor = '#ef4444';
+        screenText = 'Se identifican bloqueos significativos en el liderazgo, la integración y el flujo de información. Es prioritaria una intervención para rediseñar canales de comunicación y fortalecer el clima de confianza.';
+        benchmarkText = 'Su empresa presenta un nivel de salud organizacional crítico, requiriendo atención prioritaria.';
+    }
+
+    // 5. Renderizar los desgloses visuales en pantalla
+    let categoriesHtml = `<div class="iso-breakdown" style="margin-top: 2.5rem; text-align: left;">
+        <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--text-main); border-bottom: 2px solid var(--border); padding-bottom: 0.5rem;">
+            Resultados por Dimensión
+        </h3>`;
+
+    for (const cat in categoryResults) {
+        const { score, max, percentage } = categoryResults[cat];
+        const feedback = getCategoryFeedback(cat, percentage);
+        const catColor = getCategoryColor(percentage);
+
+        categoriesHtml += `
+            <div class="category-result-card" style="background: rgba(0,0,0,0.02); border: 1px solid var(--border); padding: 1.5rem; border-radius: 16px; margin-bottom: 1.2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <span style="font-weight: var(--fw-bold); font-size: 1.1rem; color: var(--text-main);">${cat}</span>
+                    <span style="font-weight: var(--fw-bold); color: ${catColor};">${score} / ${max} pts (${percentage}%)</span>
+                </div>
+                <div style="background: rgba(0,0,0,0.05); height: 8px; border-radius: 4px; overflow: hidden; margin-bottom: 0.8rem;">
+                    <div style="background: ${catColor}; width: ${percentage}%; height: 100%; border-radius: 4px;"></div>
+                </div>
+                <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; margin: 0;">${feedback}</p>
+            </div>
+        `;
+    }
+    categoriesHtml += `</div>`;
 
     document.getElementById('risk-type').innerText = riskType;
     document.getElementById('risk-type').style.color = accentColor;
     document.getElementById('risk-description').innerHTML = `
-        <p>${screenText}</p>
-        <p class="result-note">
+        <div style="font-size: 1.4rem; font-weight: bold; margin-bottom: 1rem; color: var(--text-main);">
+            Índice de Salud Organizacional (ISO): <span style="color: ${accentColor};">${isoScore} / ${isoMax} pts (${isoPercentage}%)</span>
+        </div>
+        <p style="margin-bottom: 1.5rem;">${screenText}</p>
+        ${categoriesHtml}
+        <p class="result-note" style="margin-top: 2rem;">
             Descargue el informe completo en PDF para ver el detalle de las recomendaciones.
         </p>
     `;
 
-    // Preparar contenido para el PDF (oculto en pantalla)
+    // 6. Preparar contenido para el PDF
+    let pdfCategoriesHtml = '';
+    for (const cat in categoryResults) {
+        const { score, max, percentage } = categoryResults[cat];
+        const feedback = getCategoryFeedback(cat, percentage);
+        const catColor = getCategoryColor(percentage);
+
+        pdfCategoriesHtml += `
+            <div style="border: 1px solid #ddd; padding: 12px; border-radius: 8px; margin-bottom: 12px; background-color: #fafafa; page-break-inside: avoid;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <strong style="font-size: 12pt; color: #1a1f36;">${cat}</strong>
+                    <span style="font-weight: bold; color: ${catColor}; font-size: 11pt;">${score} / ${max} pts (${percentage}%)</span>
+                </div>
+                <div style="background: #eee; height: 6px; border-radius: 3px; overflow: hidden; margin-bottom: 8px;">
+                    <div style="background: ${catColor}; width: ${percentage}%; height: 100%;"></div>
+                </div>
+                <p style="font-size: 10.5pt; color: #4a5568; margin: 0; line-height: 1.4;">${feedback}</p>
+            </div>
+        `;
+    }
+
+    const gmailButtonBody = `
+        <div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; line-height: 1.6; color: #000;">
+            <p>Estimado/a${state.leads.name ? ' ' + state.leads.name : ''},</p>
+            <p>Gracias por completar el diagnóstico de salud organizacional.</p>
+            
+            <div style="margin-top: 1.5rem; margin-bottom: 1.5rem; border-left: 4px solid ${accentColor}; padding-left: 12px;">
+                <strong style="font-size: 16pt;">Resultado General: <span style="color: ${accentColor};">${riskType}</span></strong><br>
+                <strong>Índice ISO:</strong> ${isoScore} / ${isoMax} puntos (${isoPercentage}%)<br>
+                <strong>Benchmark:</strong> ${benchmarkText}
+            </div>
+            
+            <p style="font-size: 11pt; margin-bottom: 1.5rem;">${screenText}</p>
+            
+            <h3 style="font-size: 14pt; border-bottom: 1px solid #eee; padding-bottom: 6px; margin-top: 2rem; margin-bottom: 1rem; color: #1a1f36;">
+                Resultados Detallados por Categoría
+            </h3>
+            
+            ${pdfCategoriesHtml}
+            
+            <div style="margin-top: 2.5rem; border-top: 1px solid #eee; padding-top: 1.5rem; font-size: 10.5pt; color: #555;">
+                <strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Perito Auxiliar en Seguridad Vial y Accidentología.<br>
+                <strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank" style="color: #e8650a; text-decoration: none;">https://bio.site/LEXRRHH</a><br><br>
+                <em style="font-size: 9.5pt; color: #777;">Este diagnóstico identifica áreas de mejora, pero no las corrige de forma automatizada. Para profundizar en los desvíos detectados y diseñar un plan de acción a medida, le sugerimos agendar una reunión de análisis personalizada.</em>
+            </div>
+        </div>
+    `;
+
     const pdfOutput = document.getElementById('pdf-content');
     if (pdfOutput) {
-        // Usamos el mismo gmailButtonBody para el PDF ya que ahora tiene formato HTML
         pdfOutput.innerHTML = gmailButtonBody;
 
-        // Cargar datos del lead en el encabezado del PDF
         document.getElementById('pdf-user-name').innerText = state.leads.name;
         document.getElementById('pdf-user-company').innerText = state.leads.company;
         document.getElementById('pdf-date').innerText = new Date().toLocaleDateString();
     }
 
-    // Guardar automáticamente en Google Sheets
+    // 7. Configurar textos para Email Automático
+    const emailBody = `
+        <div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; line-height: 1.6; color: #1a1f36;">
+            <h2>Hola ${state.leads.name || ''},</h2>
+            <p>Gracias por completar el <strong>Diagnóstico de Salud Organizacional</strong>.</p>
+            <p>Según sus respuestas, su organización presenta un <strong>Índice de Salud Organizacional (ISO)</strong> de <strong>${isoScore} / ${isoMax} puntos (${isoPercentage}%)</strong>, correspondiente a un nivel de:</p>
+            <div style="margin: 1.5rem 0; padding: 12px; border-left: 4px solid ${accentColor}; background-color: #fafafa; font-size: 14pt; font-weight: bold; color: ${accentColor};">
+                ${riskType}
+            </div>
+            <p>${screenText}</p>
+            <p>Para ver el detalle completo de las recomendaciones por categoría, le invitamos a descargar el reporte PDF generado al finalizar el test.</p>
+            <p>Quedo a disposición para conversar sobre sus resultados.</p>
+            <br>
+            <strong>Sergio De Rosa.</strong><br>
+            <strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a>
+        </div>
+    `;
+
+    state.currentEmailSubject = emailSubject;
+    state.currentEmailBody = emailBody;
+
+    // 8. Enviar datos a Google Sheets
     const dataToSave = {
         name: state.leads.name,
         email: state.leads.email,
@@ -535,15 +661,29 @@ function showResults() {
         fleetSize: state.leads.fleetSize,
         role: state.leads.role,
         riskType: riskType,
-        points: score,
-        individualAnswers: state.answers.map(a => a.optionNumber) // Array con [1, 3, 2, ...]
+        points: isoScore,
+        isoScore: isoScore,
+        isoPercentage: isoPercentage,
+        
+        // Puntajes y porcentajes por dimensión
+        comunicacionScore: categoryResults['COMUNICACIÓN'].score,
+        comunicacionPercentage: categoryResults['COMUNICACIÓN'].percentage,
+        liderazgoScore: categoryResults['LIDERAZGO'].score,
+        liderazgoPercentage: categoryResults['LIDERAZGO'].percentage,
+        climaLaboralScore: categoryResults['CLIMA LABORAL'].score,
+        climaLaboralPercentage: categoryResults['CLIMA LABORAL'].percentage,
+        trabajoEquipoScore: categoryResults['TRABAJO EN EQUIPO'].score,
+        trabajoEquipoPercentage: categoryResults['TRABAJO EN EQUIPO'].percentage,
+        gestionCambioScore: categoryResults['GESTIÓN DE CAMBIO'].score,
+        gestionCambioPercentage: categoryResults['GESTIÓN DE CAMBIO'].percentage,
+        
+        individualAnswers: state.answers.map(a => a.optionNumber)
     };
     saveToGoogleSheet(dataToSave);
 
-    // Envío automático de email al terminar
+    // 9. Envío automático de email al terminar
     sendAutoEmail(riskType, emailSubject, emailBody);
 
-    // Aplicar ban por 1 hora para evitar re-intentos constantes
     if (state.leads.email) {
         banEmail(state.leads.email);
     }
