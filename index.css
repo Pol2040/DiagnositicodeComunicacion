@@ -116,6 +116,16 @@
     display: block;
 }
 
+/* Hover effects for brand logos */
+.logo-container a {
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.logo-container a:hover {
+    transform: scale(1.03);
+    opacity: 0.95;
+}
+
 [data-theme='dark'] #quiz-section .card {
     background: #082232;
 }
