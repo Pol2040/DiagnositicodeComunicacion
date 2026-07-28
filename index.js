@@ -468,41 +468,71 @@ function showResults() {
     const isoMax = Object.values(categoryScores).reduce((sum, item) => sum + item.max, 0) || 60;
     const isoPercentage = Math.round((isoScore / isoMax) * 100);
 
-    // 3. Definición de Devoluciones (Feedbacks) por dimensión
-    const CATEGORY_FEEDBACK = {
-        'COMUNICACIÓN': {
-            high: 'La comunicación en el equipo es fluida, estructurada y orientada a resultados. Los objetivos claros y las reuniones efectivas facilitan la alineación de todos.',
-            medium: 'Se observan canales de comunicación activos, pero persisten inconsistencias en la formalización de objetivos o en el seguimiento estructurado de tareas.',
-            low: 'La comunicación es mayormente informal o reactiva. La falta de feedback claro y objetivos explícitos genera incertidumbre y desalineación en el equipo.'
-        },
-        'LIDERAZGO': {
-            high: 'Los líderes demuestran un rol activo de guía y soporte. Están disponibles para sus equipos y facilitan espacios periódicos para la alineación de metas.',
-            medium: 'El liderazgo responde a las necesidades diarias, pero requiere sistematizar los espacios de feedback y mejorar la claridad en la dirección brindada.',
-            low: 'Se percibe un liderazgo distante o centrado únicamente en la urgencia. La falta de dirección clara y disponibilidad debilita la confianza de los colaboradores.'
-        },
-        'CLIMA LABORAL': {
-            high: 'El ambiente de trabajo es seguro y de mutuo respeto. Existe libertad para expresar desacuerdos y los logros son reconocidos de forma explícita.',
-            medium: 'El clima de trabajo es estable, aunque existen tensiones ocasionales o falta de reconocimiento formal que limitan el compromiso del equipo.',
-            low: 'Se detectan niveles de tensión o temor a represalias al expresar disconformidades. La falta de valoración y apoyo mutuo afecta negativamente el clima.'
-        },
-        'TRABAJO EN EQUIPO': {
-            high: 'Existe una sólida colaboración interdepartamental y una cultura enfocada en la resolución constructiva de conflictos mediante el diálogo y los acuerdos.',
-            medium: 'Los equipos colaboran cuando se solicita, pero la resolución de conflictos suele demorarse o depender de voluntades individuales más que de procesos claros.',
-            low: 'Se perciben silos entre áreas y dificultades para colaborar bajo presión. Los conflictos no resueltos generan fricción constante en la operación.'
-        },
-        'GESTIÓN DE CAMBIO': {
-            high: 'La organización es ágil y gestiona el cambio de forma estructurada, comunicando el impacto a los colaboradores y logrando una rápida adaptación.',
-            medium: 'Se implementan cambios, pero suele faltar comunicación previa detallada o los equipos demoran más de lo previsto en reorganizarse.',
-            low: 'Los cambios se perciben como imposiciones con poca claridad. La resistencia y la lentitud para reorganizar tareas ponen en riesgo la continuidad operativa.'
-        }
-    };
-
     function getCategoryFeedback(category, percentage) {
-        const feedback = CATEGORY_FEEDBACK[category];
-        if (!feedback) return '';
-        if (percentage >= 80) return feedback.high;
-        if (percentage >= 50) return feedback.medium;
-        return feedback.low;
+        switch (category) {
+            case 'COMUNICACIÓN':
+                if (percentage <= 32) {
+                    return 'La comunicación presenta importantes dificultades. Los objetivos, el seguimiento y el feedback no forman parte de prácticas sistemáticas, generando desalineación y pérdida de eficiencia.';
+                } else if (percentage <= 46) {
+                    return 'Existen mecanismos de comunicación, aunque todavía son inconsistentes. La claridad depende más de iniciativas individuales que de procesos establecidos.';
+                } else if (percentage <= 66) {
+                    return 'La comunicación muestra bases aceptables, aunque aún existen oportunidades para fortalecer la claridad de objetivos, el seguimiento y el feedback.';
+                } else if (percentage <= 85) {
+                    return 'Existen prácticas de comunicación establecidas, aunque algunos equipos perciben falta de claridad en objetivos y feedback.';
+                } else {
+                    return 'La comunicación constituye una fortaleza organizacional. Los objetivos son claros, las reuniones generan acuerdos concretos y el feedback acompaña el desempeño de manera consistente.';
+                }
+            case 'LIDERAZGO':
+                if (percentage <= 32) {
+                    return 'Los líderes presentan dificultades para orientar, acompañar y alinear a sus equipos, afectando la coordinación cotidiana y la confianza.';
+                } else if (percentage <= 46) {
+                    return 'Existen prácticas de liderazgo, aunque todavía son poco consistentes entre equipos o responsables.';
+                } else if (percentage <= 66) {
+                    return 'El liderazgo sostiene el funcionamiento general, aunque fortalecer el seguimiento y la cercanía con los equipos mejoraría los resultados.';
+                } else if (percentage <= 86) {
+                    return 'Los líderes brindan dirección clara y mantienen espacios de seguimiento periódicos. Existen oportunidades para consolidar estas prácticas.';
+                } else {
+                    return 'El liderazgo constituye una fortaleza organizacional. Los responsables acompañan, orientan y generan alineación de manera consistente.';
+                }
+            case 'CLIMA LABORAL':
+                if (percentage <= 39) {
+                    return 'Predomina un contexto donde expresar diferencias o reconocer aportes resulta poco frecuente, afectando la confianza y el compromiso.';
+                } else if (percentage <= 59) {
+                    return 'Se observan señales positivas, aunque todavía existen barreras para consolidar relaciones basadas en confianza y reconocimiento.';
+                } else if (percentage <= 79) {
+                    return 'El clima laboral resulta funcional para la mayoría de los equipos, aunque fortalecer el reconocimiento y la seguridad psicológica favorecería mejores niveles de colaboración.';
+                } else if (percentage <= 94) {
+                    return 'El ambiente de trabajo favorece relaciones respetuosas y espacios donde las diferencias pueden abordarse de manera constructiva.';
+                } else {
+                    return 'El clima laboral constituye una fortaleza. Predominan relaciones basadas en confianza, respeto y reconocimiento.';
+                }
+            case 'TRABAJO EN EQUIPO':
+                if (percentage <= 39) {
+                    return 'La colaboración entre áreas presenta dificultades frecuentes y los conflictos no siempre encuentran espacios adecuados para su resolución.';
+                } else if (percentage <= 59) {
+                    return 'Existen experiencias positivas de colaboración, aunque todavía dependen de personas o situaciones puntuales.';
+                } else if (percentage <= 79) {
+                    return 'El trabajo conjunto permite sostener la operación cotidiana, aunque fortalecer la coordinación interáreas mejoraría la eficiencia.';
+                } else if (percentage <= 94) {
+                    return 'La organización muestra una buena capacidad de colaboración y resolución de conflictos mediante conversaciones orientadas a acuerdos.';
+                } else {
+                    return 'La colaboración entre equipos constituye una fortaleza organizacional y favorece una respuesta coordinada frente a desafíos compartidos.';
+                }
+            case 'GESTIÓN DE CAMBIO':
+                if (percentage <= 39) {
+                    return 'Los cambios suelen implementarse sin suficiente comunicación ni acompañamiento, dificultando la adaptación de los equipos.';
+                } else if (percentage <= 59) {
+                    return 'La organización comunica algunos cambios, aunque el proceso todavía presenta oportunidades para mejorar la comprensión y la reorganización posterior.';
+                } else if (percentage <= 79) {
+                    return 'Los cambios se gestionan de manera aceptable, aunque fortalecer la comunicación previa y el seguimiento facilitaría la adaptación.';
+                } else if (percentage <= 94) {
+                    return 'La organización comunica adecuadamente los cambios y acompaña a los equipos durante la implementación.';
+                } else {
+                    return 'La gestión del cambio constituye una capacidad consolidada. Los equipos comprenden los cambios, reorganizan su trabajo y sostienen el funcionamiento con rapidez.';
+                }
+            default:
+                return '';
+        }
     }
 
     function getCategoryColor(percentage) {
