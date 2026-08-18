@@ -551,18 +551,60 @@ function showResults() {
     if (isoPercentage >= 80) {
         riskType = 'SALUD ORGANIZACIONAL ALTA';
         accentColor = '#10b981';
-        screenText = 'La organización posee prácticas maduras de comunicación, liderazgo y clima. El desafío es sostener estas fortalezas y sistematizarlas como cultura de la empresa.';
         benchmarkText = 'Su empresa presenta un nivel de salud organizacional óptimo, superior al 85% de las organizaciones evaluadas.';
     } else if (isoPercentage >= 50) {
         riskType = 'SALUD ORGANIZACIONAL MEDIA';
         accentColor = '#f59e0b';
-        screenText = 'Existen bases operativas construidas, pero se observan inconsistencias que frenan el desempeño. Se requiere estandarizar procesos de alineación y feedback para consolidar los equipos.';
         benchmarkText = 'Su empresa presenta un nivel de salud organizacional en desarrollo, similar al promedio del sector.';
     } else {
         riskType = 'SALUD ORGANIZACIONAL BAJA';
         accentColor = '#ef4444';
-        screenText = 'Se identifican bloqueos significativos en el liderazgo, la integración y el flujo de información. Es prioritaria una intervención para rediseñar canales de comunicación y fortalecer el clima de confianza.';
         benchmarkText = 'Su empresa presenta un nivel de salud organizacional crítico, requiriendo atención prioritaria.';
+    }
+
+    // Identificar desvíos específicos por dimensión
+    const criticalCategories = [];
+    const warningCategories = [];
+    const strengths = [];
+
+    for (const cat in categoryResults) {
+        const { percentage } = categoryResults[cat];
+        if (percentage < 50) {
+            criticalCategories.push({ name: cat, percentage });
+        } else if (percentage < 80) {
+            warningCategories.push({ name: cat, percentage });
+        } else {
+            strengths.push(cat);
+        }
+    }
+
+    // Construcción dinámica del texto de devolución general (screenText)
+    if (isoPercentage >= 80) {
+        if (criticalCategories.length === 0 && warningCategories.length === 0) {
+            screenText = 'La organización posee prácticas maduras y consistentes en todas sus dimensiones (comunicación, liderazgo, clima, trabajo en equipo y gestión de cambio). El desafío es sostener estas fortalezas y sistematizarlas como cultura de la empresa.';
+        } else {
+            screenText = 'La organización presenta un nivel de salud organizacional general alto, sustentado por fortalezas sólidas en la mayoría de sus dimensiones. Sin embargo, se detectan desequilibrios que requieren atención para consolidar la salud general:';
+            if (criticalCategories.length > 0) {
+                const names = criticalCategories.map(c => `<strong>${c.name}</strong> (${c.percentage}%)`).join(', ');
+                screenText += `<br><br>⚠️ <strong>Nota de atención crítica:</strong> Se identifican desvíos críticos en el área de ${names}. A pesar del buen resultado general, estas deficiencias pueden actuar como un cuello de botella que neutralice las fortalezas de la organización.`;
+            }
+            if (warningCategories.length > 0) {
+                const names = warningCategories.map(c => `<strong>${c.name}</strong> (${c.percentage}%)`).join(', ');
+                screenText += `<br><br>🔸 <strong>Oportunidad de mejora:</strong> El área de ${names} se encuentra en desarrollo, existiendo espacio para estandarizar y consolidar sus prácticas.`;
+            }
+        }
+    } else if (isoPercentage >= 50) {
+        screenText = 'Existen bases operativas construidas, pero se observan inconsistencias que frenan el desempeño. Se requiere estandarizar procesos de alineación y feedback para consolidar los equipos.';
+        if (criticalCategories.length > 0) {
+            const names = criticalCategories.map(c => `<strong>${c.name}</strong> (${c.percentage}%)`).join(', ');
+            screenText += `<br><br>⚠️ <strong>Atención prioritaria:</strong> Se observan resultados críticos en el área de ${names}, que deben ser abordados con urgencia para estabilizar el desempeño del equipo.`;
+        }
+    } else {
+        screenText = 'Se identifican bloqueos significativos en el liderazgo, la integración y el flujo de información. Es prioritaria una intervención para rediseñar canales de comunicación y fortalecer el clima de confianza.';
+        if (strengths.length > 0) {
+            const names = strengths.map(s => `<strong>${s}</strong>`).join(', ');
+            screenText += `<br><br>💡 <strong>Punto de apoyo:</strong> Como aspecto positivo, el área de ${names} se destaca como una fortaleza sobre la cual apalancar las acciones de mejora.`;
+        }
     }
 
     // 5. Renderizar los desgloses visuales en pantalla
