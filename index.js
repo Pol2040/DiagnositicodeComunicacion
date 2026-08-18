@@ -578,6 +578,12 @@ function showResults() {
         }
     }
 
+    // Helper para obtener variante determinista según el nombre del usuario
+    const getVariant = (variants, name) => {
+        const seed = (name || '').split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) || 0;
+        return variants[seed % variants.length];
+    };
+
     // Construcción dinámica del texto de devolución general (screenText)
     if (isoPercentage >= 80) {
         if (criticalCategories.length === 0 && warningCategories.length === 0) {
@@ -586,24 +592,44 @@ function showResults() {
             screenText = 'La organización presenta un nivel de salud organizacional general alto, sustentado por fortalezas sólidas en la mayoría de sus dimensiones. Sin embargo, se detectan desequilibrios que requieren atención para consolidar la salud general:';
             if (criticalCategories.length > 0) {
                 const names = criticalCategories.map(c => `<strong>${c.name}</strong> (${c.percentage}%)`).join(', ');
-                screenText += `<br><br><strong>Nota de atención crítica:</strong> Se identifican desvíos críticos en el área de ${names}. A pesar del buen resultado general, estas deficiencias pueden actuar como un cuello de botella que neutralice las fortalezas de la organización.`;
+                const variants = [
+                    `Se identifican desvíos críticos en el área de ${names}. A pesar del buen resultado general, estas deficiencias pueden actuar como un cuello de botella que neutralice las fortalezas de la organización.`,
+                    `Se observan desajustes graves en el área de ${names} que requieren intervención. Si no se resuelven, corren el riesgo de opacar el buen desempeño del resto de la organización.`,
+                    `El área de ${names} presenta un nivel crítico que exige atención inmediata. Estas debilidades podrían desestabilizar la salud general y reducir la efectividad del resto de los procesos.`
+                ];
+                screenText += `<br><br><strong>Nota de atención crítica:</strong> ${getVariant(variants, state.leads.name)}`;
             }
             if (warningCategories.length > 0) {
                 const names = warningCategories.map(c => `<strong>${c.name}</strong> (${c.percentage}%)`).join(', ');
-                screenText += `<br><br><strong>Oportunidad de mejora:</strong> El área de ${names} se encuentra en desarrollo, existiendo espacio para estandarizar y consolidar sus prácticas.`;
+                const variants = [
+                    `El área de ${names} se encuentra en desarrollo, existiendo espacio para estandarizar y consolidar sus prácticas.`,
+                    `Se detectan oportunidades de optimización en el área de ${names}, donde la formalización de procesos ayudará a consolidar el nivel general.`,
+                    `El área de ${names} muestra inconsistencias moderadas. Enfocar esfuerzos aquí permitirá unificar los criterios de trabajo y potenciar los resultados.`
+                ];
+                screenText += `<br><br><strong>Oportunidad de mejora:</strong> ${getVariant(variants, state.leads.name)}`;
             }
         }
     } else if (isoPercentage >= 50) {
         screenText = 'Existen bases operativas construidas, pero se observan inconsistencias que frenan el desempeño. Se requiere estandarizar procesos de alineación y feedback para consolidar los equipos.';
         if (criticalCategories.length > 0) {
             const names = criticalCategories.map(c => `<strong>${c.name}</strong> (${c.percentage}%)`).join(', ');
-            screenText += `<br><br><strong>Atención prioritaria:</strong> Se observan resultados críticos en el área de ${names}, que deben ser abordados con urgencia para estabilizar el desempeño del equipo.`;
+            const variants = [
+                `Se observan resultados críticos en el área de ${names}, que deben ser abordados con urgencia para estabilizar el desempeño del equipo.`,
+                `Los resultados presentan conflictos graves en el área de ${names}; el desempeño del equipo puede verse comprometido al mantener las condiciones actuales.`,
+                `Se registran desvíos severos en el área de ${names}. Es fundamental intervenir a corto plazo para mitigar riesgos en la operación y asegurar el bienestar del equipo.`
+            ];
+            screenText += `<br><br><strong>Atención prioritaria:</strong> ${getVariant(variants, state.leads.name)}`;
         }
     } else {
         screenText = 'Se identifican bloqueos significativos en el liderazgo, la integración y el flujo de información. Es prioritaria una intervención para rediseñar canales de comunicación y fortalecer el clima de confianza.';
         if (strengths.length > 0) {
             const names = strengths.map(s => `<strong>${s}</strong>`).join(', ');
-            screenText += `<br><br><strong>Punto de apoyo:</strong> Como aspecto positivo, el área de ${names} se destaca como una fortaleza sobre la cual apalancar las acciones de mejora.`;
+            const variants = [
+                `Como aspecto positivo, el área de ${names} se destaca como una fortaleza sobre la cual apalancar las acciones de mejora.`,
+                `A pesar del panorama complejo, el área de ${names} se sostiene como un pilar fuerte que puede servir de guía y base para el resto de la organización.`,
+                `La dimensión de ${names} se mantiene en un nivel óptimo. Recomendamos utilizar esta fortaleza como punto de partida y modelo para impulsar la recuperación de las demás áreas.`
+            ];
+            screenText += `<br><br><strong>Punto de apoyo:</strong> ${getVariant(variants, state.leads.name)}`;
         }
     }
 
