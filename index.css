@@ -463,12 +463,6 @@ main {
 
 #risk-description strong {
     color: var(--text-main);
-    background: rgba(232, 101, 10, 0.1);
-    padding: 0 4px;
-    border-radius: 4px;
-}
-[data-theme='dark'] #risk-description strong {
-    background: rgba(226, 29, 72, 0.15);
 }
 
 .result-note {
