@@ -823,7 +823,6 @@ function showResults() {
     for (const cat in categoryResults) {
         const { score, max, percentage } = categoryResults[cat];
         const feedback = getCategoryFeedback(cat, percentage);
-        const recommendation = state.categoryRecommendations[cat];
         const catColor = getCategoryColor(percentage);
 
         categoriesHtml += `
@@ -835,10 +834,7 @@ function showResults() {
                 <div style="background: rgba(0,0,0,0.05); height: 8px; border-radius: 4px; overflow: hidden; margin-bottom: 0.8rem;">
                     <div style="background: ${catColor}; width: ${percentage}%; height: 100%; border-radius: 4px;"></div>
                 </div>
-                <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; margin: 0 0 0.8rem 0;">${feedback}</p>
-                <p style="font-size: 0.95rem; color: var(--text-main); line-height: 1.5; margin: 0;">
-                    <strong>Recomendación:</strong> ${recommendation}
-                </p>
+                <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; margin: 0;">${feedback}</p>
             </div>
         `;
     }
