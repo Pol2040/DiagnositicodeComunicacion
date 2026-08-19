@@ -535,6 +535,186 @@ function showResults() {
         }
     }
 
+    function getCategoryRecommendation(category, percentage, name) {
+        let recommendations = [];
+        switch (category.toUpperCase()) {
+            case 'COMUNICACIÓN':
+                if (percentage <= 32) {
+                    recommendations = [
+                        "Definir objetivos claros.",
+                        "Estandarizar reuniones.",
+                        "Implementar feedback periódico."
+                    ];
+                } else if (percentage <= 46) {
+                    recommendations = [
+                        "Formalizar rutinas de comunicación.",
+                        "Homogeneizar criterios.",
+                        "Incrementar el feedback."
+                    ];
+                } else if (percentage <= 66) {
+                    recommendations = [
+                        "Fortalecer claridad de objetivos.",
+                        "Optimizar feedback.",
+                        "Revisar reuniones."
+                    ];
+                } else if (percentage <= 85) {
+                    recommendations = [
+                        "Consolidar buenas prácticas.",
+                        "Promover aprendizaje entre líderes.",
+                        "Monitorear consistencia."
+                    ];
+                } else {
+                    recommendations = [
+                        "Mantener prácticas.",
+                        "Documentar buenas prácticas.",
+                        "Compartir experiencias."
+                    ];
+                }
+                break;
+            case 'LIDERAZGO':
+                if (percentage <= 32) {
+                    recommendations = [
+                        "Desarrollar habilidades de conducción.",
+                        "Reuniones de seguimiento.",
+                        "Acompañar mandos medios."
+                    ];
+                } else if (percentage <= 46) {
+                    recommendations = [
+                        "Homogeneizar criterios.",
+                        "Fortalecer seguimiento.",
+                        "Incrementar disponibilidad."
+                    ];
+                } else if (percentage <= 66) {
+                    recommendations = [
+                        "Profundizar conversaciones de desarrollo.",
+                        "Reforzar acompañamiento.",
+                        "Mejorar alineación."
+                    ];
+                } else if (percentage <= 86) {
+                    recommendations = [
+                        "Consolidar prácticas.",
+                        "Desarrollar liderazgo situacional.",
+                        "Compartir buenas prácticas."
+                    ];
+                } else {
+                    recommendations = [
+                        "Mantener modelo.",
+                        "Mentorear líderes.",
+                        "Programas avanzados."
+                    ];
+                }
+                break;
+            case 'CLIMA LABORAL':
+                if (percentage <= 39) {
+                    recommendations = [
+                        "Generar espacios seguros.",
+                        "Implementar reconocimiento.",
+                        "Reforzar confianza."
+                    ];
+                } else if (percentage <= 59) {
+                    recommendations = [
+                        "Incrementar reconocimiento.",
+                        "Promover conversaciones.",
+                        "Trabajar seguridad psicológica."
+                    ];
+                } else if (percentage <= 79) {
+                    recommendations = [
+                        "Consolidar reconocimiento.",
+                        "Monitorear clima.",
+                        "Fortalecer participación."
+                    ];
+                } else if (percentage <= 94) {
+                    recommendations = [
+                        "Mantener buenas prácticas.",
+                        "Extender experiencias.",
+                        "Reconocer logros."
+                    ];
+                } else {
+                    recommendations = [
+                        "Conservar cultura.",
+                        "Difundir prácticas.",
+                        "Usar el clima como ventaja."
+                    ];
+                }
+                break;
+            case 'TRABAJO EN EQUIPO':
+                if (percentage <= 39) {
+                    recommendations = [
+                        "Mejorar coordinación.",
+                        "Resolver conflictos.",
+                        "Definir acuerdos."
+                    ];
+                } else if (percentage <= 59) {
+                    recommendations = [
+                        "Estandarizar cooperación.",
+                        "Reducir tiempos.",
+                        "Impulsar coordinación."
+                    ];
+                } else if (percentage <= 79) {
+                    recommendations = [
+                        "Optimizar colaboración.",
+                        "Revisar acuerdos.",
+                        "Monitorear conflictos."
+                    ];
+                } else if (percentage <= 94) {
+                    recommendations = [
+                        "Consolidar colaboración.",
+                        "Compartir prácticas.",
+                        "Fortalecer proyectos."
+                    ];
+                } else {
+                    recommendations = [
+                        "Mantener colaboración.",
+                        "Transferir aprendizajes.",
+                        "Promover innovación."
+                    ];
+                }
+                break;
+            case 'GESTIÓN DE CAMBIO':
+            case 'GESTIÓN DEL CAMBIO':
+                if (percentage <= 39) {
+                    recommendations = [
+                        "Comunicar cambios antes de implementarlos.",
+                        "Explicar impactos.",
+                        "Acompañar adaptación."
+                    ];
+                } else if (percentage <= 59) {
+                    recommendations = [
+                        "Estandarizar comunicación.",
+                        "Mejorar seguimiento.",
+                        "Reducir incertidumbre."
+                    ];
+                } else if (percentage <= 79) {
+                    recommendations = [
+                        "Fortalecer planificación.",
+                        "Medir adaptación.",
+                        "Comunicar resultados."
+                    ];
+                } else if (percentage <= 94) {
+                    recommendations = [
+                        "Consolidar metodología.",
+                        "Documentar aprendizajes.",
+                        "Mantener acompañamiento."
+                    ];
+                } else {
+                    recommendations = [
+                        "Mantener madurez.",
+                        "Difundir prácticas.",
+                        "Promover mejora continua."
+                    ];
+                }
+                break;
+            default:
+                return '';
+        }
+
+        if (recommendations.length === 0) return '';
+        const key = (name || '') + category;
+        const seed = key.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) || 0;
+        return recommendations[seed % recommendations.length];
+    }
+
+
     function getCategoryColor(percentage) {
         if (percentage >= 80) return '#10b981'; // Verde
         if (percentage >= 50) return '#f59e0b'; // Amarillo
@@ -642,6 +822,7 @@ function showResults() {
     for (const cat in categoryResults) {
         const { score, max, percentage } = categoryResults[cat];
         const feedback = getCategoryFeedback(cat, percentage);
+        const recommendation = getCategoryRecommendation(cat, percentage, state.leads.name);
         const catColor = getCategoryColor(percentage);
 
         categoriesHtml += `
@@ -653,7 +834,10 @@ function showResults() {
                 <div style="background: rgba(0,0,0,0.05); height: 8px; border-radius: 4px; overflow: hidden; margin-bottom: 0.8rem;">
                     <div style="background: ${catColor}; width: ${percentage}%; height: 100%; border-radius: 4px;"></div>
                 </div>
-                <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; margin: 0;">${feedback}</p>
+                <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; margin: 0 0 0.8rem 0;">${feedback}</p>
+                <p style="font-size: 0.95rem; color: var(--text-main); line-height: 1.5; margin: 0;">
+                    <strong>Recomendación:</strong> ${recommendation}
+                </p>
             </div>
         `;
     }
@@ -677,6 +861,7 @@ function showResults() {
     for (const cat in categoryResults) {
         const { score, max, percentage } = categoryResults[cat];
         const feedback = getCategoryFeedback(cat, percentage);
+        const recommendation = getCategoryRecommendation(cat, percentage, state.leads.name);
         const catColor = getCategoryColor(percentage);
 
         pdfCategoriesHtml += `
@@ -688,7 +873,10 @@ function showResults() {
                 <div style="background: #eee; height: 6px; border-radius: 3px; overflow: hidden; margin-bottom: 8px;">
                     <div style="background: ${catColor}; width: ${percentage}%; height: 100%;"></div>
                 </div>
-                <p style="font-size: 10.5pt; color: #4a5568; margin: 0; line-height: 1.4;">${feedback}</p>
+                <p style="font-size: 10.5pt; color: #4a5568; margin: 0 0 6px 0; line-height: 1.4;">${feedback}</p>
+                <p style="font-size: 10.5pt; color: #1a1f36; margin: 0; line-height: 1.4; font-weight: bold;">
+                    Recomendación: <span style="font-weight: normal; color: #4a5568;">${recommendation}</span>
+                </p>
             </div>
         `;
     }
