@@ -456,11 +456,13 @@ function showResults() {
         }
     });
 
+    state.categoryRecommendations = {};
     const categoryResults = {};
     for (const cat in categoryScores) {
         const { score, max } = categoryScores[cat];
         const percentage = max > 0 ? Math.round((score / max) * 100) : 0;
         categoryResults[cat] = { score, max, percentage };
+        state.categoryRecommendations[cat] = getCategoryRecommendation(cat, percentage);
     }
 
     // 2. Cálculo del ISO (Índice de Salud Organizacional)
@@ -709,9 +711,8 @@ function showResults() {
         }
 
         if (recommendations.length === 0) return '';
-        const key = (name || '') + category;
-        const seed = key.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) || 0;
-        return recommendations[seed % recommendations.length];
+        const randomIndex = Math.floor(Math.random() * recommendations.length);
+        return recommendations[randomIndex];
     }
 
 
@@ -822,7 +823,7 @@ function showResults() {
     for (const cat in categoryResults) {
         const { score, max, percentage } = categoryResults[cat];
         const feedback = getCategoryFeedback(cat, percentage);
-        const recommendation = getCategoryRecommendation(cat, percentage, state.leads.name);
+        const recommendation = state.categoryRecommendations[cat];
         const catColor = getCategoryColor(percentage);
 
         categoriesHtml += `
@@ -861,7 +862,7 @@ function showResults() {
     for (const cat in categoryResults) {
         const { score, max, percentage } = categoryResults[cat];
         const feedback = getCategoryFeedback(cat, percentage);
-        const recommendation = getCategoryRecommendation(cat, percentage, state.leads.name);
+        const recommendation = state.categoryRecommendations[cat];
         const catColor = getCategoryColor(percentage);
 
         pdfCategoriesHtml += `
