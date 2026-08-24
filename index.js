@@ -898,13 +898,14 @@ function showResults() {
             ${pdfCategoriesHtml}
             
             <div style="margin-top: 2.5rem; border-top: 1px solid #eee; padding-top: 1.5rem; font-size: 10.5pt; color: #555;">
-                <strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Perito Auxiliar en Seguridad Vial y Accidentología.<br>
+                <strong>Lic. Susana Nuevo.</strong> Master Coach Ontológico Profesional. Directora de Fundación ELAC Delegaciones Ramos Mejía y Luján.                
+                <strong>Lic. Marcelo Trulls.</strong> Licenciado en Ciencias de la Comunicación. Universidad de Morón. Senior Coach Ontológico Profesional. Fundación ELAC, certificado por la AACOP. Director de Fundación ELAC Delegaciones Ramos Mejía y Luján.
+                <strong>ELAC</strong>  General Soler 138 – Ramos Mejía. Provincia de Buenos Aires <strong>Tel: +54 911 5110-6664</strong>.<a href="elacramosmejia@elacoaching.com.ar" target="_blank" style="color: #e8650a; text-decoration: none;">elacramosmejia@elacoaching.com.ar</a><br><br>
                 <strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank" style="color: #e8650a; text-decoration: none;">https://bio.site/LEXRRHH</a><br><br>
                 <em style="font-size: 9.5pt; color: #777;">Este diagnóstico identifica áreas de mejora, pero no las corrige de forma automatizada. Para profundizar en los desvíos detectados y diseñar un plan de acción a medida, le sugerimos agendar una reunión de análisis personalizada.</em>
             </div>
         </div>
     `;
-
     const pdfOutput = document.getElementById('pdf-content');
     if (pdfOutput) {
         pdfOutput.innerHTML = gmailButtonBody;
@@ -927,8 +928,13 @@ function showResults() {
             <p>Para ver el detalle completo de las recomendaciones por categoría, le invitamos a descargar el reporte PDF generado al finalizar el test.</p>
             <p>Quedo a disposición para conversar sobre sus resultados.</p>
             <br>
-            <strong>Sergio De Rosa.</strong><br>
-            <strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a>
+                       <div style="margin-top: 2.5rem; border-top: 1px solid #eee; padding-top: 1.5rem; font-size: 10.5pt; color: #555;">
+                <strong>Lic. Susana Nuevo.</strong> Master Coach Ontológico Profesional. Directora de Fundación ELAC Delegaciones Ramos Mejía y Luján.                
+                <strong>Lic. Marcelo Trulls.</strong> Licenciado en Ciencias de la Comunicación. Universidad de Morón. Senior Coach Ontológico Profesional. Fundación ELAC, certificado por la AACOP. Director de Fundación ELAC Delegaciones Ramos Mejía y Luján.
+                <strong>ELAC</strong>  General Soler 138 – Ramos Mejía. Provincia de Buenos Aires <strong>Tel: +54 911 5110-6664</strong>.<a href="elacramosmejia@elacoaching.com.ar" target="_blank" style="color: #e8650a; text-decoration: none;">elacramosmejia@elacoaching.com.ar</a><br><br>
+                <strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank" style="color: #e8650a; text-decoration: none;">https://bio.site/LEXRRHH</a><br><br>
+                <em style="font-size: 9.5pt; color: #777;">Este diagnóstico identifica áreas de mejora, pero no las corrige de forma automatizada. Para profundizar en los desvíos detectados y diseñar un plan de acción a medida, le sugerimos agendar una reunión de análisis personalizada.</em>
+            </div>
         </div>
     `;
 
@@ -946,7 +952,7 @@ function showResults() {
         points: isoScore,
         isoScore: isoScore,
         isoPercentage: isoPercentage,
-        
+
         // Puntajes y porcentajes por dimensión
         comunicacionScore: categoryResults['COMUNICACIÓN'].score,
         comunicacionPercentage: categoryResults['COMUNICACIÓN'].percentage,
@@ -958,7 +964,7 @@ function showResults() {
         trabajoEquipoPercentage: categoryResults['TRABAJO EN EQUIPO'].percentage,
         gestionCambioScore: categoryResults['GESTIÓN DE CAMBIO'].score,
         gestionCambioPercentage: categoryResults['GESTIÓN DE CAMBIO'].percentage,
-        
+
         individualAnswers: state.answers.map(a => a.optionNumber)
     };
     saveToGoogleSheet(dataToSave);
