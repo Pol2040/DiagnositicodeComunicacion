@@ -267,7 +267,7 @@ main {
     text-align: left;
     margin-bottom: 6rem;
     max-width: 800px;
-    margin-left: -2rem;
+    margin-left: 0;
     margin-right: auto;
 }
 
@@ -452,10 +452,6 @@ main {
 }
 
 @media (max-width: 768px) {
-    .hero {
-        margin-left: 0;
-    }
-
     .hero-title {
         font-size: 2.2rem;
     }
