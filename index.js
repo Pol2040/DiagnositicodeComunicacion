@@ -722,6 +722,55 @@ function showResults() {
         return '#ef4444'; // Rojo
     }
 
+    function getBenchmarkTableHtml(percentage) {
+        const ranges = [
+            { min: 95, max: 100, rangeText: "95% - 100%", label: "Top 10%", color: "#0d9488", bg: "#f0fdfa" },
+            { min: 80, max: 94, rangeText: "80% - 94%", label: "Promedio alto", color: "#10b981", bg: "#f0fdf4" },
+            { min: 60, max: 79, rangeText: "60% - 79%", label: "Promedio", color: "#3b82f6", bg: "#eff6ff" },
+            { min: 40, max: 59, rangeText: "40% - 59%", label: "Riesgo", color: "#f59e0b", bg: "#fffbeb" },
+            { min: 0, max: 39, rangeText: "20% - 39%", label: "Alto riesgo", color: "#ef4444", bg: "#fef2f2" }
+        ];
+
+        let rowsHtml = '';
+        ranges.forEach(r => {
+            const isUserRange = (percentage >= r.min && percentage <= r.max);
+            const rowBg = isUserRange ? r.bg : '#ffffff';
+            const textColor = isUserRange ? r.color : '#2d3748';
+            const fontStyle = isUserRange ? 'font-weight: bold;' : '';
+            const borderStyle = 'border: 1px solid #e2e8f0;';
+            
+            const indicator = isUserRange 
+                ? `<span style="background-color: ${r.color}; color: #ffffff; padding: 3px 10px; border-radius: 20px; font-size: 8.5pt; font-weight: bold; display: inline-block;">Su empresa</span>`
+                : '';
+
+            rowsHtml += `
+                <tr style="background-color: ${rowBg}; ${fontStyle}">
+                    <td style="padding: 8px 12px; font-size: 10pt; ${borderStyle} text-align: left; color: ${textColor};">${r.rangeText}</td>
+                    <td style="padding: 8px 12px; font-size: 10pt; ${borderStyle} text-align: left; color: ${textColor};">${r.label}</td>
+                    <td style="padding: 8px 12px; font-size: 10pt; ${borderStyle} text-align: center; vertical-align: middle;">${indicator}</td>
+                </tr>
+            `;
+        });
+
+        return `
+            <div style="margin-top: 15px; margin-bottom: 20px; font-family: Arial, sans-serif; page-break-inside: avoid;">
+                <div style="font-weight: bold; font-size: 11pt; margin-bottom: 8px; color: #1a1f36; text-align: left;">Ubicación en el Benchmark de Salud Organizacional:</div>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 5px;">
+                    <thead>
+                        <tr style="background-color: #f7fafc; border-bottom: 2px solid #e2e8f0;">
+                            <th style="padding: 10px 12px; font-size: 9.5pt; color: #4a5568; text-align: left; font-weight: bold; border: 1px solid #e2e8f0;">Rango ISO</th>
+                            <th style="padding: 10px 12px; font-size: 9.5pt; color: #4a5568; text-align: left; font-weight: bold; border: 1px solid #e2e8f0;">Clasificación</th>
+                            <th style="padding: 10px 12px; font-size: 9.5pt; color: #4a5568; text-align: center; font-weight: bold; border: 1px solid #e2e8f0; width: 110px;">Su Nivel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${rowsHtml}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    }
+
     // 4. Clasificación del Nivel General ISO
     let riskType = '';
     let screenText = '';
@@ -888,6 +937,8 @@ function showResults() {
                 <strong>Índice ISO:</strong> ${isoScore} / ${isoMax} puntos (${isoPercentage}%)<br>
                 <strong>Benchmark:</strong> ${benchmarkText}
             </div>
+            
+            ${getBenchmarkTableHtml(isoPercentage)}
             
             <p style="font-size: 11pt; margin-bottom: 1.5rem;">${screenText}</p>
             
