@@ -889,6 +889,117 @@ function showResults() {
     }
     categoriesHtml += `</div>`;
 
+    // 5.5. Calcular Fortalezas (>= 60%)
+    const STRENGTH_FEEDBACK = {
+        'COMUNICACIÓN': {
+            verde: [
+                'La comunicación interna es fluida, clara y los objetivos están alineados en todos los niveles.',
+                'Se destacan prácticas sólidas de feedback continuo y reuniones efectivas orientadas a la acción.',
+                'Los canales de comunicación son transparentes y facilitan la alineación estratégica del equipo.'
+            ],
+            amarillo: [
+                'La comunicación presenta prácticas establecidas, aunque existen oportunidades de mejora en el feedback periódico.',
+                'Los objetivos se transmiten de manera aceptable, pero se requiere mayor consistencia en el seguimiento de reuniones.',
+                'Existen canales de información funcionales, aunque se puede optimizar la claridad en la delegación de tareas.'
+            ]
+        },
+        'LIDERAZGO': {
+            verde: [
+                'Los líderes guían con claridad, están accesibles y fomentan un ambiente de confianza.',
+                'El estilo de liderazgo promueve la alineación de objetivos y el desarrollo de los colaboradores.',
+                'Los mandos medios demuestran una sólida capacidad de acompañamiento y feedback hacia sus equipos.'
+            ],
+            amarillo: [
+                'El liderazgo sostiene la operación de forma adecuada, aunque se puede profundizar en la cercanía y escucha activa.',
+                'Los responsables brindan dirección, pero se observa espacio para estandarizar las reuniones de seguimiento.',
+                'Se percibe orientación al logro, con oportunidad de fortalecer el empoderamiento y autonomía del equipo.'
+            ]
+        },
+        'CLIMA LABORAL': {
+            verde: [
+                'Buen clima laboral, caracterizado por relaciones de confianza y un alto nivel de compromiso.',
+                'Existe una cultura de reconocimiento mutuo y un espacio seguro para expresar opiniones.',
+                'Predomina el respeto y la valoración de los logros, consolidando la motivación de las personas.'
+            ],
+            amarillo: [
+                'El ambiente de trabajo es positivo, aunque se puede potenciar el reconocimiento formal de los logros.',
+                'Existe respeto en el día a día, con oportunidad de fortalecer los espacios de seguridad psicológica para debatir diferencias.',
+                'El clima es estable, pero se beneficiaría de dinámicas que refuercen la integración y el sentido de pertenencia.'
+            ]
+        },
+        'TRABAJO EN EQUIPO': {
+            verde: [
+                'Buena colaboración entre equipos, con una respuesta ágil y coordinada ante desafíos comunes.',
+                'Los equipos cooperan de manera sinérgica, resolviendo conflictos a través de acuerdos constructivos.',
+                'Sólida sinergia interdepartamental que facilita el logro de los objetivos organizacionales.'
+            ],
+            amarillo: [
+                'La colaboración mutua funciona bien en general, aunque persisten oportunidades para agilizar la respuesta interáreas.',
+                'Existe predisposición para trabajar en equipo, pero se requiere formalizar acuerdos para resolver diferencias operativas.',
+                'Los equipos cooperan ante emergencias, con la oportunidad de estructurar mejor el flujo cotidiano de tareas compartidas.'
+            ]
+        },
+        'GESTIÓN DE CAMBIO': {
+            verde: [
+                'La organización posee una excelente capacidad de adaptación y acompaña eficazmente los procesos de cambio.',
+                'Los colaboradores asimilan los cambios rápidamente, reorganizando tareas sin perder productividad.',
+                'Los procesos de cambio se comunican de forma oportuna, reduciendo la incertidumbre y facilitando la transición.'
+            ],
+            amarillo: [
+                'La adaptación a nuevas directrices es aceptable, aunque se puede mejorar la comunicación previa al impacto.',
+                'Los cambios son asimilados, pero los equipos requieren un acompañamiento más estructurado durante la transición.',
+                'Existe flexibilidad ante los cambios, con la oportunidad de definir con mayor claridad los nuevos roles y procesos.'
+            ]
+        }
+    };
+
+    const strengthCandidates = [];
+    for (const cat in categoryResults) {
+        const { percentage } = categoryResults[cat];
+        if (percentage >= 60) {
+            strengthCandidates.push({ name: cat, percentage });
+        }
+    }
+    // Ordenar de mayor a menor porcentaje
+    strengthCandidates.sort((a, b) => b.percentage - a.percentage);
+    const topStrengths = strengthCandidates.slice(0, 3);
+
+    const chosenStrengths = [];
+    topStrengths.forEach(str => {
+        const stateKey = str.percentage >= 80 ? 'verde' : 'amarillo';
+        const options = STRENGTH_FEEDBACK[str.name]?.[stateKey];
+        if (options && options.length > 0) {
+            const randIndex = Math.floor(Math.random() * options.length);
+            chosenStrengths.push(options[randIndex]);
+        }
+    });
+
+    let screenStrengthsHtml = '';
+    if (chosenStrengths.length > 0) {
+        screenStrengthsHtml = `
+            <div class="strengths-section" style="margin-top: 2rem; text-align: left; background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.15); padding: 1.5rem; border-radius: 16px;">
+                <h4 style="font-size: 1.2rem; margin-top: 0; margin-bottom: 1rem; color: var(--text-main); font-weight: var(--fw-bold);">
+                    Principales Fortalezas:
+                </h4>
+                <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.95rem; color: var(--text-muted); line-height: 1.6;">
+                    ${chosenStrengths.map(dev => `<li style="margin-bottom: 0.5rem;">${dev}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+    }
+
+    let pdfStrengthsHtml = '';
+    if (chosenStrengths.length > 0) {
+        pdfStrengthsHtml = `
+            <div style="margin-top: 20px; margin-bottom: 20px; page-break-inside: avoid;">
+                <strong style="font-size: 12pt; color: #1a1f36; display: block; margin-bottom: 8px;">Principales Fortalezas:</strong>
+                <ul style="margin: 0; padding-left: 20px; font-size: 10.5pt; color: #4a5568; line-height: 1.5;">
+                    ${chosenStrengths.map(dev => `<li style="margin-bottom: 4px;">${dev}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+    }
+
     document.getElementById('risk-type').innerText = riskType;
     document.getElementById('risk-type').style.color = accentColor;
     document.getElementById('risk-description').innerHTML = `
@@ -897,6 +1008,7 @@ function showResults() {
         </div>
         <p style="margin-bottom: 1.5rem;">${screenText}</p>
         ${categoriesHtml}
+        ${screenStrengthsHtml}
         <p class="result-note" style="margin-top: 2rem;">
             Descargue el informe completo en PDF para ver el detalle de las recomendaciones.
         </p>
@@ -947,6 +1059,8 @@ function showResults() {
             </h3>
             
             ${pdfCategoriesHtml}
+            
+            ${pdfStrengthsHtml}
             
             <div style="margin-top: 2.5rem; border-top: 1px solid #eee; padding-top: 1.5rem; font-size: 10.5pt; color: #555;">
                 <strong>Lic. Susana Nuevo.</strong> Master Coach Ontológico Profesional. Directora de Fundación ELAC Delegaciones Ramos Mejía y Luján.</a><br><br>         
