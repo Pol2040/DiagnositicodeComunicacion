@@ -324,6 +324,19 @@ main {
     box-shadow: 0 10px 15px -3px rgba(226, 29, 72, 0.4);
 }
 
+.hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem 1.5rem;
+    flex-wrap: wrap;
+}
+
+.hero-actions .logout-link {
+    display: inline-block;
+    margin: 0;
+    text-align: left;
+}
+
 .hero-footer-text {
     font-size: 0.95rem;
     color: var(--text-muted);
