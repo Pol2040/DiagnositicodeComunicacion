@@ -1000,6 +1000,117 @@ function showResults() {
         `;
     }
 
+    // 5.6. Calcular Áreas de Mejora (< 60%)
+    const IMPROVEMENT_FEEDBACK = {
+        'COMUNICACIÓN': {
+            rojo: [
+                'Brechas críticas en la alineación diaria; se requiere formalizar canales y minutas de reuniones.',
+                'Ausencia de feedback regular y formal hacia los colaboradores, generando desorientación operativa.',
+                'Falta de claridad en los objetivos y metas semanales, afectando el cumplimiento y la productividad.'
+            ],
+            amarillo: [
+                'Oportunidad de estructurar de forma más regular las reuniones de alineación del equipo.',
+                'Se requiere mayor continuidad y formalidad en la retroalimentación individual de desempeño.',
+                'Los flujos de información son intermitentes; se sugiere definir responsables claros por canal.'
+            ]
+        },
+        'LIDERAZGO': {
+            rojo: [
+                'Estilo de conducción poco participativo o ausente, afectando la motivación y autonomía del equipo.',
+                'Dificultades severas de supervisión y acompañamiento en las tareas cotidianas.',
+                'Baja disponibilidad de los líderes para escuchar ideas o resolver inquietudes operativas.'
+            ],
+            amarillo: [
+                'Se sugiere capacitar a los líderes en técnicas de feedback constructivo y escucha activa.',
+                'Oportunidad de estandarizar las rutinas cotidianas de seguimiento y apoyo al equipo.',
+                'Necesidad de fortalecer el liderazgo situacional para delegar con mayor efectividad.'
+            ]
+        },
+        'CLIMA LABORAL': {
+            rojo: [
+                'Bajos niveles de confianza mutua y barreras significativas para expresar diferencias sin temor.',
+                'Ausencia persistente de reconocimiento hacia los logros y aportes del equipo.',
+                'Ambiente laboral tensionado que desgasta la motivación y eleva la rotación del personal.'
+            ],
+            amarillo: [
+                'Se recomienda establecer programas sencillos de reconocimiento por hitos alcanzados.',
+                'Oportunidad de habilitar dinámicas grupales para favorecer la seguridad psicológica en los debates.',
+                'Falta de integración y cohesión interna; conviene promover espacios extra-operativos.'
+            ]
+        },
+        'TRABAJO EN EQUIPO': {
+            rojo: [
+                'Falta de colaboración crítica interáreas que genera demoras y duplicación de tareas.',
+                'Dificultad para resolver conflictos operativos mediante el diálogo y acuerdos constructivos.',
+                'Aislamiento de los equipos (silos), impidiendo una respuesta unificada ante problemas.'
+            ],
+            amarillo: [
+                'Conviene definir acuerdos de nivel de servicio (SLA) internos para mejorar la colaboración interdepartamental.',
+                'Oportunidad de capacitar en técnicas de comunicación asertiva para la gestión de conflictos.',
+                'Falta de alineación en procesos comunes; se sugiere repasar responsabilidades compartidas.'
+            ]
+        },
+        'GESTIÓN DE CAMBIO': {
+            rojo: [
+                'Los procesos de cambio se implementan de forma abrupta, sin comunicación clara de propósitos e impactos.',
+                'Fuerte resistencia operativa debido a la falta de acompañamiento en las transiciones.',
+                'Baja agilidad organizacional para reorganizar roles y procesos tras una modificación estructural.'
+            ],
+            amarillo: [
+                'Se recomienda involucrar de forma temprana a los líderes en el diseño y comunicación del cambio.',
+                'Oportunidad de documentar las lecciones aprendidas después de cada cambio importante.',
+                'Acompañamiento intermitente; conviene estructurar mejor el plan de capacitación del nuevo proceso.'
+            ]
+        }
+    };
+
+    const improvementCandidates = [];
+    for (const cat in categoryResults) {
+        const { percentage } = categoryResults[cat];
+        if (percentage < 60) {
+            improvementCandidates.push({ name: cat, percentage });
+        }
+    }
+    // Ordenar de menor a mayor porcentaje
+    improvementCandidates.sort((a, b) => a.percentage - b.percentage);
+    const topImprovements = improvementCandidates.slice(0, 3);
+
+    const chosenImprovements = [];
+    topImprovements.forEach(str => {
+        const stateKey = str.percentage < 50 ? 'rojo' : 'amarillo';
+        const options = IMPROVEMENT_FEEDBACK[str.name]?.[stateKey];
+        if (options && options.length > 0) {
+            const randIndex = Math.floor(Math.random() * options.length);
+            chosenImprovements.push(options[randIndex]);
+        }
+    });
+
+    let screenImprovementsHtml = '';
+    if (chosenImprovements.length > 0) {
+        screenImprovementsHtml = `
+            <div class="improvements-section" style="margin-top: 1.5rem; text-align: left; background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.15); padding: 1.5rem; border-radius: 16px;">
+                <h4 style="font-size: 1.2rem; margin-top: 0; margin-bottom: 1rem; color: var(--text-main); font-weight: var(--fw-bold);">
+                    Áreas de mejora:
+                </h4>
+                <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.95rem; color: var(--text-muted); line-height: 1.6;">
+                    ${chosenImprovements.map(dev => `<li style="margin-bottom: 0.5rem;">${dev}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+    }
+
+    let pdfImprovementsHtml = '';
+    if (chosenImprovements.length > 0) {
+        pdfImprovementsHtml = `
+            <div style="margin-top: 20px; margin-bottom: 20px; page-break-inside: avoid;">
+                <strong style="font-size: 12pt; color: #1a1f36; display: block; margin-bottom: 8px;">Áreas de mejora:</strong>
+                <ul style="margin: 0; padding-left: 20px; font-size: 10.5pt; color: #4a5568; line-height: 1.5;">
+                    ${chosenImprovements.map(dev => `<li style="margin-bottom: 4px;">${dev}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+    }
+
     document.getElementById('risk-type').innerText = riskType;
     document.getElementById('risk-type').style.color = accentColor;
     document.getElementById('risk-description').innerHTML = `
@@ -1009,6 +1120,7 @@ function showResults() {
         <p style="margin-bottom: 1.5rem;">${screenText}</p>
         ${categoriesHtml}
         ${screenStrengthsHtml}
+        ${screenImprovementsHtml}
         <p class="result-note" style="margin-top: 2rem;">
             Descargue el informe completo en PDF para ver el detalle de las recomendaciones.
         </p>
@@ -1061,6 +1173,8 @@ function showResults() {
             ${pdfCategoriesHtml}
             
             ${pdfStrengthsHtml}
+            
+            ${pdfImprovementsHtml}
             
             <div style="margin-top: 2.5rem; border-top: 1px solid #eee; padding-top: 1.5rem; font-size: 10.5pt; color: #555;">
                 <strong>Lic. Susana Nuevo.</strong> Master Coach Ontológico Profesional. Directora de Fundación ELAC Delegaciones Ramos Mejía y Luján.</a><br><br>         
