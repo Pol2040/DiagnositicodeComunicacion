@@ -1119,8 +1119,6 @@ function showResults() {
         </div>
         <p style="margin-bottom: 1.5rem;">${screenText}</p>
         ${categoriesHtml}
-        ${screenStrengthsHtml}
-        ${screenImprovementsHtml}
         <p class="result-note" style="margin-top: 2rem;">
             Descargue el informe completo en PDF para ver el detalle de las recomendaciones.
         </p>
