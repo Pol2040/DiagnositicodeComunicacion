@@ -153,7 +153,8 @@ const state = {
 const WHITELIST_EMAILS = [
     'poloocuello@gmail.com',
     'sergiogustavoderosa@yahoo.com.ar',
-    'aohrnialian@gmail.com'
+    'aohrnialian@gmail.com',
+    'lexsaludorganizacional@gmail.com'
 ];
 
 function isEmailBanned(email) {
@@ -1353,6 +1354,15 @@ function sendEmail() {
 */
 
 /**
+ * Configuración centralizada de EmailJS para la cuenta LexSaludOrganizacional@gmail.com
+ */
+const EMAILJS_CONFIG = {
+    SERVICE_ID: 'service_d4lc1lt',
+    TEMPLATE_ID: 'template_tj22x0c',
+    PUBLIC_KEY: 'QqvN175XJ37_kz0JR'
+};
+
+/**
  * Envío automático y silencioso al finalizar el test
  */
 function sendAutoEmail(riskType, emailSubject, emailBody) {
@@ -1371,12 +1381,7 @@ function sendAutoEmail(riskType, emailSubject, emailBody) {
 
     console.log('📤 Iniciando envío automático de email a:', state.leads.email);
 
-    // CONFIGURACIÓN: Todos los casos usan la cuenta principal por ahora
-    let SERVICE_ID = 'service_iroclp9';
-    let TEMPLATE_ID = 'template_dkpkqkf';
-    let PUBLIC_KEY = 'LVsT7wnz6G3_xp-AL';
-
-    emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
+    emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, templateParams, EMAILJS_CONFIG.PUBLIC_KEY)
         .then(() => {
             console.log('✅ Email automático enviado con éxito.');
         })
