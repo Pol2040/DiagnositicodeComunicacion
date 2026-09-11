@@ -6,11 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diagnóstico de Salud Organizacional (ISO)</title>
     <meta name="description" content="Diagnóstico organizacional en 7 minutos">
+
+    <!-- Meta tags para previsualización al compartir el link (Open Graph / Redes Sociales) -->
     <meta property="og:title" content="Diagnóstico de Salud Organizacional (ISO)">
     <meta property="og:description" content="Diagnóstico organizacional en 7 minutos">
     <meta property="og:type" content="website">
     <meta property="og:image" content="previewDiagnostico.png">
+    <meta property="og:image:type" content="image/png">
+
+    <!-- Meta tags para Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Diagnóstico de Salud Organizacional (ISO)">
+    <meta name="twitter:description" content="Diagnóstico organizacional en 7 minutos">
     <meta name="twitter:image" content="previewDiagnostico.png">
 
     <!-- Ícono de la Pestaña (Favicon) -->
@@ -81,16 +88,12 @@
                     <h1 class="hero-title">¿Qué está frenando<br>hoy a tu organización?</h1>
                     <h2 class="hero-subtitle">Descúbrelo en <span class="highlight">7 minutos.</span></h2>
                     <p class="hero-description">Evaluá 5 dimensiones clave y obtené un diagnóstico automático con tus principales fortalezas, riesgos y oportunidades de mejora.</p>
-                    <div class="hero-actions" style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
+                    <div class="hero-actions">
                         <button id="hero-start-btn" class="btn btn-primary hero-btn" onclick="startQuiz()">Iniciar diagnóstico</button>
-                        <button class="btn btn-outline hero-preview-btn" onclick="openPreviewModal()" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 1.1rem 1.8rem; border-radius: 12px; font-weight: 600;">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                            Ver previsualización
-                        </button>
                     </div>
                     <p class="hero-footer-text">Confidencial · 7 minutos · Resultado inmediato</p>
                 </div>
-                <div class="hero-schema-container" onclick="openPreviewModal()" style="cursor: pointer;" title="Haz clic para ampliar la previsualización">
+                <div class="hero-schema-container">
                     <img id="schema-lec-day" src="esquema_lec_dia.svg" alt="Esquema para LEC versión día" class="hero-schema-img schema-day">
                     <img id="schema-lec-night" src="esquema_lec_noche.svg" alt="Esquema para LEC versión noche" class="hero-schema-img schema-night">
                 </div>
@@ -248,24 +251,7 @@
         </section>
     </main>
 
-    <!-- Modal de Previsualización -->
-    <div id="preview-modal" class="preview-modal" onclick="closePreviewModal(event)">
-        <div class="preview-modal-content" onclick="event.stopPropagation()">
-            <button class="preview-modal-close" onclick="closePreviewModal()">&times;</button>
-            <div class="preview-modal-header">
-                <h3>Previsualización del Diagnóstico</h3>
-                <p>Modelo de evaluación organizacional y dimensiones analizadas</p>
-            </div>
-            <div class="preview-modal-body">
-                <img src="previewDiagnostico.png" alt="Previsualización Diagnóstico de Comunicación" class="preview-modal-img">
-            </div>
-            <div class="preview-modal-footer">
-                <button class="btn btn-primary" onclick="closePreviewModal(); startQuiz();">Iniciar diagnóstico</button>
-                <button class="btn btn-outline" onclick="closePreviewModal()">Cerrar</button>
-            </div>
-        </div>
-    </div>
-
     <script src="index.js"></script>
 </body>
+
 </html>
