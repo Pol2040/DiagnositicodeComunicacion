@@ -73,14 +73,20 @@
     <main id="app-content">
         <!-- Hero Section -->
         <section id="hero-section" class="section active">
-            <div class="hero">
-                <h1 class="hero-title">¿Qué está frenando<br>hoy a tu organización?</h1>
-                <h2 class="hero-subtitle">Descúbrelo en <span class="highlight">7 minutos.</span></h2>
-                <p class="hero-description">Evaluá 5 dimensiones clave y obtené un diagnóstico automático con tus principales fortalezas, riesgos y oportunidades de mejora.</p>
-                <div class="hero-actions">
-                    <button id="hero-start-btn" class="btn btn-primary hero-btn" onclick="startQuiz()">Iniciar diagnóstico</button>
+            <div class="hero-container">
+                <div class="hero">
+                    <h1 class="hero-title">¿Qué está frenando<br>hoy a tu organización?</h1>
+                    <h2 class="hero-subtitle">Descúbrelo en <span class="highlight">7 minutos.</span></h2>
+                    <p class="hero-description">Evaluá 5 dimensiones clave y obtené un diagnóstico automático con tus principales fortalezas, riesgos y oportunidades de mejora.</p>
+                    <div class="hero-actions">
+                        <button id="hero-start-btn" class="btn btn-primary hero-btn" onclick="startQuiz()">Iniciar diagnóstico</button>
+                    </div>
+                    <p class="hero-footer-text">Confidencial · 7 minutos · Resultado inmediato</p>
                 </div>
-                <p class="hero-footer-text">Confidencial · 7 minutos · Resultado inmediato</p>
+                <div class="hero-schema-container">
+                    <img id="schema-lec-day" src="esquema_lec_dia.svg" alt="Esquema para LEC versión día" class="hero-schema-img schema-day">
+                    <img id="schema-lec-night" src="esquema_lec_noche.svg" alt="Esquema para LEC versión noche" class="hero-schema-img schema-night">
+                </div>
             </div>
         </section>
 
