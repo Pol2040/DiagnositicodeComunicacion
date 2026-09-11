@@ -1469,3 +1469,32 @@ function logout() {
     // Recargar para limpiar todo el estado limpiamente
     window.location.reload();
 }
+
+/**
+ * Lógica para la previsualización del informe (Modal)
+ */
+function openPreviewModal() {
+    const modal = document.getElementById('preview-modal');
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closePreviewModal(event) {
+    if (event && event.target && !event.target.classList.contains('preview-modal') && !event.target.classList.contains('preview-modal-close') && event.target.tagName !== 'BUTTON') {
+        return;
+    }
+    const modal = document.getElementById('preview-modal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+// Cerrar el modal al presionar la tecla Escape
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+        closePreviewModal();
+    }
+});
