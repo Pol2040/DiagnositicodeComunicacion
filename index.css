@@ -29,6 +29,10 @@
     color-scheme: light dark;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 [data-theme='dark'] {
     --bg-body: #012841;
     --bg-card: #1e293b;
