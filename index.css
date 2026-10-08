@@ -137,7 +137,13 @@ img, svg {
 }
 
 .logo-img-elac {
-    height: 3.2rem;
+    height: 3.5rem;
+    width: auto;
+    object-fit: contain;
+}
+
+.pdf-brand-elac {
+    height: 3.5rem;
     width: auto;
     object-fit: contain;
 }
