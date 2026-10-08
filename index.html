@@ -168,9 +168,13 @@
         <!-- Quiz Section -->
         <section id="quiz-section" class="section">
             <div class="card">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
                     <div id="question-count" class="step-badge dark-pink">Pregunta 1 de 12</div>
                     <div class="dark-pink" style="font-weight: 600; font-size: 0.9rem;">EN PROGRESO</div>
+                </div>
+
+                <div class="quiz-progress-track" role="progressbar" aria-valuemin="1" aria-valuemax="12" aria-valuenow="1">
+                    <div id="quiz-progress-bar" class="quiz-progress-fill"></div>
                 </div>
 
                 <h2 id="question-text" style="font-size: 1.8rem; margin-bottom: 2.5rem; line-height: 1.3;">

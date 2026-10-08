@@ -336,6 +336,17 @@ function renderQuestion() {
     // Actualizar progreso
     document.getElementById('question-count').innerText = `Pregunta ${displayIndex} de ${totalQuestions}`;
 
+    // Actualizar barra de progreso visual
+    const progressBar = document.getElementById('quiz-progress-bar');
+    if (progressBar) {
+        const progressPercentage = (displayIndex / totalQuestions) * 100;
+        progressBar.style.width = `${progressPercentage}%`;
+        const progressTrack = progressBar.parentElement;
+        if (progressTrack) {
+            progressTrack.setAttribute('aria-valuenow', displayIndex);
+        }
+    }
+
     // Actualizar categoría y texto
     document.getElementById('question-text').innerHTML = `
         <span class="category-label">
