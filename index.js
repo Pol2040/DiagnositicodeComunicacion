@@ -470,20 +470,19 @@ function handleAnswer(points, optionNumber) {
     state.totalPoints += points;
     state.answers.push({ points, optionNumber });
 
-    // El formulario de auth aparece después de un par de bloques
-    // Ajustado para que aparezca después de la pregunta de Kilómetros (index 3)
-    if (state.currentQuestionIndex === 3 && !state.leads.email && !state.skippedAuth) {
-        showSection('auth');
-        return;
-    }
-
     if (state.currentQuestionIndex < QUESTIONS.length - 1) {
         state.currentQuestionIndex++;
         renderQuestion();
     } else {
-        showResults();
+        // Al finalizar todas las preguntas, si no ha completado el registro ni lo ha omitido, mostramos la sección de registro
+        if (!state.leads.email && !state.skippedAuth) {
+            showSection('auth');
+        } else {
+            showResults();
+        }
     }
 }
+
 
 function showResults() {
     // 1. Calcular puntajes y porcentajes por categoría
