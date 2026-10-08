@@ -1473,12 +1473,7 @@ function initCustomSelect() {
         optionDiv.setAttribute('role', 'option');
         optionDiv.setAttribute('tabindex', '0');
 
-        optionDiv.innerHTML = `
-            <span>${opt.textContent}</span>
-            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-        `;
+        optionDiv.innerHTML = `<span>${opt.textContent}</span>`;
 
         const pickOption = (e) => {
             if (e) e.stopPropagation();
