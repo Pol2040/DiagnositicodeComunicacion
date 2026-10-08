@@ -347,6 +347,7 @@ function renderQuestion() {
     // Renderizar opciones
     const optionsContainer = document.getElementById('quiz-options');
     optionsContainer.innerHTML = '';
+    optionsContainer.style.pointerEvents = 'auto';
 
     if (question.multiSelect) {
         // Renderizar checkboxes para selección múltiple
@@ -367,11 +368,16 @@ function renderQuestion() {
                 option.items.forEach((item, itemIndex) => {
                     const label = document.createElement('label');
                     label.className = 'quiz-checkbox-item';
-                    // El padding-left será el mismo que el base para alinear los checkboxes
                     label.innerHTML = `
                         <input type="checkbox" name="dg_option" value="${option.title}: ${item}">
                         <span class="quiz-checkbox-label" style="margin-left: 1.5rem;">${item}</span>
                     `;
+                    const inputEl = label.querySelector('input');
+                    if (inputEl) {
+                        inputEl.addEventListener('change', (e) => {
+                            label.classList.toggle('selected', e.target.checked);
+                        });
+                    }
                     optionsContainer.appendChild(label);
                 });
             } else {
@@ -382,6 +388,12 @@ function renderQuestion() {
                     <input type="checkbox" name="dg_option" value="${option.text}">
                     <span class="quiz-checkbox-label">${option.text}</span>
                 `;
+                const inputEl = label.querySelector('input');
+                if (inputEl) {
+                    inputEl.addEventListener('change', (e) => {
+                        label.classList.toggle('selected', e.target.checked);
+                    });
+                }
                 optionsContainer.appendChild(label);
             }
         });
@@ -409,7 +421,21 @@ function renderQuestion() {
             const button = document.createElement('button');
             button.className = 'quiz-option';
             button.innerText = option.text;
-            button.onclick = () => handleAnswer(option.points, index + 1);
+            button.onclick = (e) => {
+                e.preventDefault();
+                // Desmarcar cualquier otra opción
+                const allOptions = optionsContainer.querySelectorAll('.quiz-option');
+                allOptions.forEach(opt => opt.classList.remove('selected'));
+
+                // Marcar esta opción con el destacado intenso
+                button.classList.add('selected');
+                optionsContainer.style.pointerEvents = 'none';
+
+                // Breve pausa para apreciación visual del usuario antes de avanzar
+                setTimeout(() => {
+                    handleAnswer(option.points, index + 1);
+                }, 280);
+            };
             optionsContainer.appendChild(button);
         });
     }
