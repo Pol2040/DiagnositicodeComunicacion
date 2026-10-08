@@ -142,8 +142,28 @@ img, svg {
     object-fit: contain;
 }
 
+.pdf-logo-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.pdf-brand-lex {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.pdf-brand-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #e21d48;
+}
+
 .pdf-brand-elac {
-    height: 3.5rem;
+    height: 2.4rem;
     width: auto;
     object-fit: contain;
 }
