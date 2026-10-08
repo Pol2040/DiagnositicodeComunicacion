@@ -488,8 +488,7 @@ main {
     font-size: 0.9rem;
 }
 
-.form-group input,
-.form-group select {
+.form-group input {
     width: 100%;
     padding: 1rem;
     background: var(--bg-body);
@@ -502,12 +501,25 @@ main {
 }
 
 .form-group select {
+    width: 100%;
+    padding: 1rem 2.8rem 1rem 1rem;
+    background-color: var(--bg-body);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.5;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
     appearance: none;
     cursor: pointer;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 1rem center;
-    background-size: 1.2rem;
+    background-size: 1.25rem;
+    transition: all 0.3s ease;
 }
 
 [data-theme='dark'] .form-group select {
@@ -515,8 +527,14 @@ main {
 }
 
 .form-group select option {
-    background: var(--bg-card);
+    background-color: var(--bg-card);
     color: var(--text-main);
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+}
+
+.form-group select option:disabled {
+    color: var(--text-muted);
 }
 
 .form-group input:focus,
@@ -525,6 +543,206 @@ main {
     border-color: #e8650a;
     background: var(--bg-card);
     box-shadow: 0 0 0 4px rgba(232, 101, 10, 0.15);
+}
+
+/* Componente Desplegable Personalizado (Custom Select) */
+.custom-select-container {
+    position: relative;
+    width: 100%;
+    user-select: none;
+}
+
+.custom-select-trigger {
+    width: 100%;
+    padding: 1rem 2.8rem 1rem 1rem;
+    background: var(--bg-body);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: var(--fw-medium);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.custom-select-trigger .custom-select-label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    flex: 1;
+    padding-right: 0.5rem;
+}
+
+.custom-select-trigger.is-placeholder {
+    color: var(--text-muted);
+    font-weight: var(--fw-regular);
+}
+
+.custom-select-trigger:hover {
+    border-color: rgba(232, 101, 10, 0.5);
+}
+
+[data-theme='dark'] .custom-select-trigger:hover {
+    border-color: rgba(226, 29, 72, 0.5);
+}
+
+.custom-select-container.open .custom-select-trigger,
+.custom-select-trigger:focus-visible {
+    outline: none;
+    border-color: #e8650a;
+    background: var(--bg-card);
+    box-shadow: 0 0 0 4px rgba(232, 101, 10, 0.15);
+}
+
+[data-theme='dark'] .custom-select-container.open .custom-select-trigger,
+[data-theme='dark'] .custom-select-trigger:focus-visible {
+    border-color: #e21d48;
+    box-shadow: 0 0 0 4px rgba(226, 29, 72, 0.25);
+}
+
+.custom-select-arrow {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.25rem;
+    height: 1.25rem;
+    pointer-events: none;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    stroke: var(--text-muted);
+}
+
+[data-theme='dark'] .custom-select-arrow {
+    stroke: #94a3b8;
+}
+
+.custom-select-container.open .custom-select-arrow {
+    transform: translateY(-50%) rotate(180deg);
+    stroke: #e8650a;
+}
+
+[data-theme='dark'] .custom-select-container.open .custom-select-arrow {
+    stroke: #e21d48;
+}
+
+/* Dropdown Menu */
+.custom-select-dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.18), 0 4px 12px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(12px);
+    padding: 0.5rem;
+    max-height: 280px;
+    overflow-y: auto;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px) scale(0.98);
+    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.2s;
+    pointer-events: none;
+}
+
+[data-theme='dark'] .custom-select-dropdown {
+    background: #1e293b;
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 20px 40px -6px rgba(0, 0, 0, 0.6), 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.custom-select-container.open .custom-select-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+/* Custom Scrollbar */
+.custom-select-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.custom-select-dropdown::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-select-dropdown::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 999px;
+}
+
+[data-theme='dark'] .custom-select-dropdown::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Option Items */
+.custom-select-option {
+    padding: 0.8rem 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: var(--text-main);
+    font-weight: var(--fw-medium);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    line-height: 1.4;
+    transition: all 0.2s ease;
+    margin-bottom: 2px;
+}
+
+.custom-select-option:last-child {
+    margin-bottom: 0;
+}
+
+.custom-select-option:hover,
+.custom-select-option.is-focused {
+    background: var(--option-hover-bg);
+    color: #e8650a;
+    transform: translateX(4px);
+}
+
+[data-theme='dark'] .custom-select-option:hover,
+[data-theme='dark'] .custom-select-option.is-focused {
+    background: rgba(226, 29, 72, 0.12);
+    color: #e21d48;
+}
+
+.custom-select-option.selected {
+    background: #e8650a;
+    color: #ffffff !important;
+    font-weight: var(--fw-semibold);
+    transform: translateX(0);
+    box-shadow: 0 4px 12px rgba(232, 101, 10, 0.3);
+}
+
+[data-theme='dark'] .custom-select-option.selected {
+    background: #e21d48;
+    box-shadow: 0 4px 12px rgba(226, 29, 72, 0.4);
+}
+
+.custom-select-option .check-icon {
+    width: 1.1rem;
+    height: 1.1rem;
+    flex-shrink: 0;
+    stroke: currentColor;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.custom-select-option.selected .check-icon {
+    opacity: 1;
 }
 
 .step-badge {
