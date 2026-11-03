@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ============================================================
  *  LEX RRHH — Diagnóstico de Salud Organizacional (ISO)
  *  Google Apps Script — doPost + generarPDFAlVuelo
@@ -754,7 +754,7 @@ function generarPDFAlVuelo() {
   var pdfStrengthsHtml = '';
   if (chosenStrengths.length > 0) {
     pdfStrengthsHtml =
-      '<div style="margin-top: 20px; margin-bottom: 20px; page-break-inside: avoid;">' +
+      '<div style="page-break-before: always; break-before: page; margin-top: 20px; margin-bottom: 20px; page-break-inside: avoid;">' +
         '<strong style="font-size: 12pt; color: #1a1f36; display: block; margin-bottom: 8px;">Principales Fortalezas:</strong>' +
         '<ul style="margin: 0; padding-left: 20px; font-size: 10.5pt; color: #4a5568; line-height: 1.5;">' +
           chosenStrengths.map(function(dev) { return '<li style="margin-bottom: 4px;">' + dev + '</li>'; }).join('') +
@@ -765,7 +765,7 @@ function generarPDFAlVuelo() {
   var pdfImprovementsHtml = '';
   if (chosenImprovements.length > 0) {
     pdfImprovementsHtml =
-      '<div style="margin-top: 20px; margin-bottom: 20px; page-break-inside: avoid;">' +
+      '<div style="page-break-before: always; break-before: page; margin-top: 20px; margin-bottom: 20px; page-break-inside: avoid;">' +
         '<strong style="font-size: 12pt; color: #1a1f36; display: block; margin-bottom: 8px;">Áreas de mejora:</strong>' +
         '<ul style="margin: 0; padding-left: 20px; font-size: 10.5pt; color: #4a5568; line-height: 1.5;">' +
           chosenImprovements.map(function(dev) { return '<li style="margin-bottom: 4px;">' + dev + '</li>'; }).join('') +
@@ -850,7 +850,7 @@ function generarPDFAlVuelo() {
     '</p>' +
     getBenchmarkTableHtml(isoPct) +
 
-    '<h3>Resultados por Dimensión</h3>' +
+    '<h3 style="page-break-before: always; break-before: page;">Resultados Detallados por Categoría</h3>' +
     dimRowsHtml +
     pdfStrengthsHtml +
     pdfImprovementsHtml +

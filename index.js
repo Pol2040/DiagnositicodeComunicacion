@@ -1039,7 +1039,7 @@ function showResults() {
     let pdfStrengthsHtml = '';
     if (chosenStrengths.length > 0) {
         pdfStrengthsHtml = `
-            <div style="margin-top: 20px; margin-bottom: 20px; page-break-inside: avoid;">
+            <div style="page-break-before: always; break-before: page; margin-top: 20px; margin-bottom: 20px; page-break-inside: avoid;">
                 <strong style="font-size: 12pt; color: #1a1f36; display: block; margin-bottom: 8px;">Principales Fortalezas:</strong>
                 <ul style="margin: 0; padding-left: 20px; font-size: 10.5pt; color: #4a5568; line-height: 1.5;">
                     ${chosenStrengths.map(dev => `<li style="margin-bottom: 4px;">${dev}</li>`).join('')}
@@ -1212,7 +1212,7 @@ function showResults() {
             
             <p style="font-size: 11pt; margin-bottom: 1.5rem;">${screenText}</p>
             
-            <h3 style="font-size: 14pt; border-bottom: 1px solid #eee; padding-bottom: 6px; margin-top: 2rem; margin-bottom: 1rem; color: #1a1f36;">
+            <h3 style="font-size: 14pt; border-bottom: 1px solid #eee; padding-bottom: 6px; margin-top: 2rem; margin-bottom: 1rem; color: #1a1f36; page-break-before: always; break-before: page;">
                 Resultados Detallados por Categoría
             </h3>
             

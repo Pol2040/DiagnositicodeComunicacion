@@ -1162,10 +1162,13 @@ main {
 }
 
 @media print {
+    html,
     body {
         background: white !important;
         color: black !important;
         font-family: 'Open Sans', Arial, sans-serif !important;
+        overflow: visible !important;
+        overflow-x: visible !important;
     }
 
     .title-primary { color: #012841 !important; }
