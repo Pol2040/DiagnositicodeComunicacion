@@ -880,6 +880,29 @@ main {
     word-break: break-word;
 }
 
+.category-label {
+    display: block;
+    color: #e8650a;
+    font-size: 0.95rem;
+    font-weight: var(--fw-bold);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.65rem;
+    line-height: 1.3;
+}
+
+[data-theme='dark'] .category-label {
+    color: #e21d48;
+}
+
+.question-main-text {
+    display: block;
+    color: var(--text-main);
+    font-size: inherit;
+    font-weight: var(--fw-bold);
+    line-height: 1.35;
+}
+
 .quiz-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -1322,6 +1345,12 @@ main {
         margin-bottom: 1.75rem;
     }
 
+    .category-label {
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+        letter-spacing: 1.2px;
+    }
+
     .result-title {
         font-size: 2rem;
     }
@@ -1503,6 +1532,12 @@ main {
         font-size: 1.2rem;
         margin-bottom: 1.25rem;
         line-height: 1.35;
+    }
+
+    .category-label {
+        font-size: 0.8rem;
+        margin-bottom: 0.45rem;
+        letter-spacing: 1px;
     }
 
     .quiz-grid {

@@ -362,10 +362,8 @@ function renderQuestion() {
 
     // Actualizar categoría y texto
     document.getElementById('question-text').innerHTML = `
-        <span class="category-label">
-            ${question.category}
-        </span>
-        ${question.text}
+        <span class="category-label">${question.category}</span>
+        <span class="question-main-text">${question.text}</span>
     `;
 
     // Renderizar opciones
